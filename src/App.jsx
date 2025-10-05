@@ -174,12 +174,12 @@ function App() {
           {/* Top Row - Patient Monitor and Drug Selection */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-3">
             {/* Patient Monitor */}
-            <div className="h-[400px]">
+            <div className="h-[calc(100vh-280px)]">
               <PatientMonitor vitals={currentVitals} baseline={selectedScenario.baseline} />
             </div>
 
             {/* Drug Selection */}
-            <div className="h-[400px] flex flex-col gap-2 overflow-hidden">
+            <div className="h-[calc(100vh-280px)] flex flex-col gap-2 overflow-hidden">
               {/* Pharmacological Strategy */}
               <div className="flex-shrink-0">
                 <PharmacologicalStrategy
@@ -214,24 +214,24 @@ function App() {
 
             {/* Assessment is inside PharmacologyPanel, but we can split if needed */}
             <div className="bg-white rounded-lg shadow-lg p-3">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-1.5 mb-2">
                 <TrendingUp className="w-4 h-4 text-green-600" />
-                <h2 className="text-lg font-bold text-gray-800">Treatment Assessment</h2>
+                <h2 className="text-sm font-bold text-gray-800">Treatment Assessment</h2>
               </div>
               {selectedDrug && selectedScenario ? (
                 (() => {
                   const assessment = assessTreatmentQuality(selectedScenario, currentVitals, selectedDrug);
                   return (
                     <>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="text-3xl font-bold text-gray-800">{assessment.score}/100</div>
-                        <div className="text-lg text-gray-600">{assessment.grade}</div>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="text-xl font-bold text-gray-800">{assessment.score}/100</div>
+                        <div className="text-sm text-gray-600">{assessment.grade}</div>
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-1">
                         {assessment.feedback.map((item, idx) => (
                           <div
                             key={idx}
-                            className={`p-2 rounded text-sm ${
+                            className={`p-1.5 rounded text-xs ${
                               item.type === 'success'
                                 ? 'bg-green-50 text-green-800 border border-green-200'
                                 : item.type === 'warning'
@@ -247,7 +247,7 @@ function App() {
                   );
                 })()
               ) : (
-                <p className="text-gray-600 text-center py-8 text-sm">Select a drug to view treatment assessment</p>
+                <p className="text-gray-600 text-center py-4 text-xs">Select a drug to view treatment assessment</p>
               )}
             </div>
           </div>
