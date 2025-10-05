@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import { Pill, Plus, Minus } from 'lucide-react';
+import { Pill, Plus, Minus, CheckCircle2 } from 'lucide-react';
 import { formatDose } from '../utils/calculations';
 
-const DrugSelector = ({ drugs, selectedDrug, dose, onSelectDrug, onDoseChange }) => {
+const DrugSelector = ({ drugs, selectedDrug, dose, onSelectDrug, onDoseChange, strategyMatchingDrugs }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredDrugs = drugs.filter((drug) =>
     drug.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     drug.class.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const isStrategyMatch = (drug) => {
+    if (!strategyMatchingDrugs || strategyMatchingDrugs.length === 0) return false;
+    return strategyMatchingDrugs.some(d => d.id === drug.id);
+  };
 
   const adjustDose = (amount) => {
     if (!selectedDrug) return;
@@ -37,20 +42,32 @@ const DrugSelector = ({ drugs, selectedDrug, dose, onSelectDrug, onDoseChange })
 
       {/* Drug List */}
       <div className="grid grid-cols-1 gap-1 mb-2 flex-1 overflow-y-auto">
-        {filteredDrugs.map((drug) => (
-          <button
-            key={drug.id}
-            onClick={() => onSelectDrug(drug)}
-            className={`p-1.5 rounded border-2 text-left transition-all ${
-              selectedDrug?.id === drug.id
-                ? 'border-purple-500 bg-purple-50'
-                : 'border-gray-200 hover:border-purple-300 bg-white'
-            }`}
-          >
-            <h3 className="font-semibold text-gray-800 text-xs leading-tight">{drug.name}</h3>
-            <p className="text-xs text-gray-600 mt-0.5 leading-tight">{drug.class}</p>
-          </button>
-        ))}
+        {filteredDrugs.map((drug) => {
+          const matchesStrategy = isStrategyMatch(drug);
+          return (
+            <button
+              key={drug.id}
+              onClick={() => onSelectDrug(drug)}
+              className={`p-1.5 rounded border-2 text-left transition-all relative ${
+                selectedDrug?.id === drug.id
+                  ? 'border-purple-500 bg-purple-50'
+                  : matchesStrategy
+                  ? 'border-green-400 bg-green-50 hover:border-green-500'
+                  : 'border-gray-200 hover:border-purple-300 bg-white'
+              }`}
+            >
+              <div className="flex items-start gap-1">
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-800 text-xs leading-tight">{drug.name}</h3>
+                  <p className="text-xs text-gray-600 mt-0.5 leading-tight">{drug.class}</p>
+                </div>
+                {matchesStrategy && (
+                  <CheckCircle2 className="w-3.5 h-3.5 text-green-600 flex-shrink-0" />
+                )}
+              </div>
+            </button>
+          );
+        })}
       </div>
 
       {/* Dose Control */}

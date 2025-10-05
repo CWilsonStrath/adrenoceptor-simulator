@@ -6,6 +6,7 @@ import PatientMonitor from './components/PatientMonitor';
 import DrugSelector from './components/DrugSelector';
 import PharmacologyPanel from './components/PharmacologyPanel';
 import PharmacologyAnalysis from './components/PharmacologyAnalysis';
+import PharmacologicalStrategy from './components/PharmacologicalStrategy';
 import PathwayVisualizer from './components/PathwayVisualizer';
 import { scenarios } from './data/scenarios';
 import { drugs } from './data/drugs';
@@ -19,6 +20,11 @@ function App() {
   const [currentVitals, setCurrentVitals] = useState(null);
   const [showPathways, setShowPathways] = useState(false);
   const [showPharmacology, setShowPharmacology] = useState(false);
+  const [strategyMatchingDrugs, setStrategyMatchingDrugs] = useState([]);
+
+  const handleStrategyChange = (strategyData) => {
+    setStrategyMatchingDrugs(strategyData.matchingDrugs || []);
+  };
 
   // Initialize vitals when scenario changes
   useEffect(() => {
@@ -173,14 +179,26 @@ function App() {
             </div>
 
             {/* Drug Selection */}
-            <div className="h-[400px]">
-              <DrugSelector
-                drugs={drugs}
-                selectedDrug={selectedDrug}
-                dose={dose}
-                onSelectDrug={handleSelectDrug}
-                onDoseChange={setDose}
-              />
+            <div className="h-[400px] flex flex-col gap-2 overflow-hidden">
+              {/* Pharmacological Strategy */}
+              <div className="flex-shrink-0">
+                <PharmacologicalStrategy
+                  drugs={drugs}
+                  onStrategyChange={handleStrategyChange}
+                />
+              </div>
+
+              {/* Drug Selector */}
+              <div className="flex-1 min-h-0">
+                <DrugSelector
+                  drugs={drugs}
+                  selectedDrug={selectedDrug}
+                  dose={dose}
+                  onSelectDrug={handleSelectDrug}
+                  onDoseChange={setDose}
+                  strategyMatchingDrugs={strategyMatchingDrugs}
+                />
+              </div>
             </div>
           </div>
 
