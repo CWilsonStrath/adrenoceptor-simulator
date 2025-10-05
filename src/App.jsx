@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, ArrowLeft, BookOpen, ChevronDown, ChevronUp, TrendingUp } from 'lucide-react';
+import { RefreshCw, ArrowLeft, BookOpen, ChevronDown, ChevronUp, TrendingUp, FlaskConical } from 'lucide-react';
 import ScenarioSelector from './components/ScenarioSelector';
 import ScenarioInfo from './components/ScenarioInfo';
 import PatientMonitor from './components/PatientMonitor';
