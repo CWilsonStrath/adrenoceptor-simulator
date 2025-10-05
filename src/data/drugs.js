@@ -43,6 +43,12 @@ export const drugs = [
       β1: 100,
       β2: 20,
     },
+    pharmacology: {
+      α1: { ec50: 45, emax: 100, kd: 28, hillCoeff: 1.0 }, // Full agonist
+      α2: { ec50: 60, emax: 95, kd: 40, hillCoeff: 1.0 },  // Full agonist
+      β1: { ec50: 35, emax: 100, kd: 22, hillCoeff: 1.0 }, // Full agonist
+      β2: { ec50: 200, emax: 25, kd: 150, hillCoeff: 1.0 }, // Weak agonist
+    },
     dose: {
       min: 0.05,
       max: 3.0,
@@ -104,6 +110,12 @@ export const drugs = [
       α2: 10,
       β1: 0,
       β2: 0,
+    },
+    pharmacology: {
+      α1: { ec50: 55, emax: 100, kd: 35, hillCoeff: 1.0 }, // Selective full agonist
+      α2: { ec50: 450, emax: 15, kd: 320, hillCoeff: 1.0 }, // Minimal activity
+      β1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },  // No activity
+      β2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },  // No activity
     },
     dose: {
       min: 0.5,
@@ -167,6 +179,12 @@ export const drugs = [
       β1: 10,
       β2: 100,
     },
+    pharmacology: {
+      α1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },  // No activity
+      α2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },  // No activity
+      β1: { ec50: 350, emax: 12, kd: 250, hillCoeff: 1.0 }, // Minimal activity
+      β2: { ec50: 12, emax: 100, kd: 9, hillCoeff: 1.0 },   // Selective full agonist
+    },
     dose: {
       min: 2.5,
       max: 5.0,
@@ -195,6 +213,12 @@ export const drugs = [
       β1: 80,
       β2: 30,
     },
+    pharmacology: {
+      α1: { ec50: 120, emax: 70, kd: 85, hillCoeff: 1.0 },  // Moderate agonist
+      α2: { ec50: 180, emax: 50, kd: 130, hillCoeff: 1.0 }, // Moderate agonist
+      β1: { ec50: 60, emax: 85, kd: 42, hillCoeff: 1.0 },   // Strong agonist
+      β2: { ec50: 220, emax: 35, kd: 160, hillCoeff: 1.0 }, // Weak agonist
+    },
     dose: {
       min: 5,
       max: 20,
@@ -222,6 +246,12 @@ export const drugs = [
       α2: 30,
       β1: 60,
       β2: 40,
+    },
+    pharmacology: {
+      α1: { ec50: 180, emax: 60, kd: 130, hillCoeff: 1.0 }, // Moderate partial agonist
+      α2: { ec50: 280, emax: 40, kd: 200, hillCoeff: 1.0 }, // Weak partial agonist
+      β1: { ec50: 140, emax: 70, kd: 100, hillCoeff: 1.0 }, // Moderate partial agonist
+      β2: { ec50: 190, emax: 50, kd: 140, hillCoeff: 1.0 }, // Weak partial agonist
     },
     dose: {
       min: 5,
@@ -252,6 +282,12 @@ export const drugs = [
       β2: 0,
       V1: 100, // Vasopressin receptor
     },
+    pharmacology: {
+      α1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 }, // No activity
+      α2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 }, // No activity
+      β1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 }, // No activity
+      β2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 }, // No activity
+    },
     dose: {
       min: 0.01,
       max: 0.04,
@@ -280,6 +316,12 @@ export const drugs = [
       β1: 0,
       β2: 0,
       PDE3: 100, // Not adrenergic
+    },
+    pharmacology: {
+      α1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 }, // No activity
+      α2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 }, // No activity
+      β1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 }, // No activity
+      β2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 }, // No activity
     },
     dose: {
       min: 0.375,
@@ -343,6 +385,12 @@ export const drugs = [
       β1: -100, // Blockade
       β2: -20, // Minimal at therapeutic doses
     },
+    pharmacology: {
+      α1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      α2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      β1: { ec50: 18, emax: 0, kd: 12, hillCoeff: 1.0 },  // Selective β1 antagonist
+      β2: { ec50: 320, emax: 0, kd: 240, hillCoeff: 1.0 }, // Weak β2 antagonist
+    },
     dose: {
       min: 2.5,
       max: 15,
@@ -370,6 +418,12 @@ export const drugs = [
       α2: 0,
       β1: -100, // Blockade
       β2: -15,
+    },
+    pharmacology: {
+      α1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      α2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      β1: { ec50: 22, emax: 0, kd: 15, hillCoeff: 1.0 },  // Selective β1 antagonist
+      β2: { ec50: 420, emax: 0, kd: 310, hillCoeff: 1.0 }, // Weak β2 antagonist
     },
     dose: {
       min: 50,
@@ -399,6 +453,12 @@ export const drugs = [
       β1: -100, // Beta blockade
       β2: -60,
     },
+    pharmacology: {
+      α1: { ec50: 110, emax: 0, kd: 75, hillCoeff: 1.0 },  // α1 antagonist
+      α2: { ec50: 180, emax: 0, kd: 130, hillCoeff: 1.0 }, // Weak α2 antagonist
+      β1: { ec50: 28, emax: 0, kd: 19, hillCoeff: 1.0 },   // β1 antagonist
+      β2: { ec50: 65, emax: 0, kd: 45, hillCoeff: 1.0 },   // β2 antagonist
+    },
     dose: {
       min: 5,
       max: 40,
@@ -426,6 +486,12 @@ export const drugs = [
       α2: -100,
       β1: 0,
       β2: 0,
+    },
+    pharmacology: {
+      α1: { ec50: 32, emax: 0, kd: 22, hillCoeff: 1.0 }, // Non-selective α antagonist
+      α2: { ec50: 28, emax: 0, kd: 19, hillCoeff: 1.0 }, // Non-selective α antagonist
+      β1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      β2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
     },
     dose: {
       min: 0.5,
@@ -455,6 +521,12 @@ export const drugs = [
       β1: 0,
       β2: 0,
     },
+    pharmacology: {
+      α1: { ec50: 15, emax: 0, kd: 10, hillCoeff: 1.0 }, // Selective α1 antagonist (high affinity)
+      α2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      β1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      β2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+    },
     dose: {
       min: 0.5,
       max: 2.0,
@@ -482,6 +554,12 @@ export const drugs = [
       α2: 100, // Central α2 agonism
       β1: 0,
       β2: 0,
+    },
+    pharmacology: {
+      α1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      α2: { ec50: 25, emax: 100, kd: 18, hillCoeff: 1.0 }, // Selective α2 full agonist (high affinity)
+      β1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      β2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
     },
     dose: {
       min: 0.05,
