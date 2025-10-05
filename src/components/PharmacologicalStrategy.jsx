@@ -76,13 +76,13 @@ const PharmacologicalStrategy = ({ drugs, onStrategyChange }) => {
   }, [targetReceptors, drugType, selectivity, drugs, onStrategyChange]);
 
   return (
-    <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg border-2 border-indigo-200 p-2 max-h-[220px] overflow-y-auto">
+    <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg border-2 border-indigo-200 p-2">
       <div className="flex items-center gap-1.5 mb-2">
         <Lightbulb className="w-4 h-4 text-indigo-600" />
         <h3 className="text-xs font-bold text-gray-800">Pharmacological Treatment Strategy</h3>
       </div>
 
-      {/* Step 1: Target Receptors */}
+      {/* Step 1: Target Receptors - Always visible */}
       <div className="mb-2">
         <div className="flex items-center gap-1 mb-1.5">
           <Target className="w-3.5 h-3.5 text-indigo-600" />
@@ -116,8 +116,9 @@ const PharmacologicalStrategy = ({ drugs, onStrategyChange }) => {
         </div>
       </div>
 
-      {/* Step 2: Drug Type */}
-      <div className="mb-2">
+      {/* Step 2: Drug Type - Only show if receptors selected */}
+      {targetReceptors.length > 0 && (
+        <div className="mb-2">
         <label className="text-xs font-semibold text-gray-700 mb-1 block">
           2. Drug type?
         </label>
@@ -164,9 +165,11 @@ const PharmacologicalStrategy = ({ drugs, onStrategyChange }) => {
           </button>
         </div>
       </div>
+      )}
 
-      {/* Step 3: Selectivity */}
-      <div className="mb-2">
+      {/* Step 3: Selectivity - Only show if drug type selected */}
+      {targetReceptors.length > 0 && drugType !== 'any' && (
+        <div className="mb-2">
         <label className="text-xs font-semibold text-gray-700 mb-1 block">
           3. Selectivity?
         </label>
@@ -203,6 +206,7 @@ const PharmacologicalStrategy = ({ drugs, onStrategyChange }) => {
           </button>
         </div>
       </div>
+      )}
 
       {/* Results Summary */}
       {targetReceptors.length > 0 && (
