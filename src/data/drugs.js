@@ -579,4 +579,38 @@ export const drugs = [
     indications: ['Hypertensive emergency', 'Opioid/alcohol withdrawal', 'ADHD'],
     halfLife: 720, // 12 hours
   },
+  {
+    id: 'midazolam',
+    name: 'Midazolam',
+    class: 'Benzodiazepine',
+    receptors: {
+      α1: 0,
+      α2: 0,
+      β1: 0,
+      β2: 0,
+    },
+    pharmacology: {
+      α1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      α2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      β1: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+      β2: { ec50: 0, emax: 0, kd: 10000, hillCoeff: 1.0 },
+    },
+    dose: {
+      min: 1,
+      max: 10,
+      typical: 5,
+      unit: 'mg',
+      route: 'IV',
+    },
+    effects: {
+      hr: { min: -15, max: -5 },
+      sbp: { min: -30, max: -10 },
+      dbp: { min: -20, max: -5 },
+      svr: { min: -200, max: -50 },
+      co: { min: -0.5, max: 0 },
+      bronchodilation: { min: 0, max: 0 },
+    },
+    indications: ['Cocaine toxicity (first-line)', 'Sedation', 'Seizures', 'Agitation'],
+    halfLife: 120, // 2 hours
+  },
 ];

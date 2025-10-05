@@ -178,20 +178,34 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
   } else if (drug && scenario.optimalDrug) {
     // Provide helpful suggestions for cocaine scenario
     if (scenario.id === 'cocaine-od') {
-      if (drug.id === 'phentolamine') {
+      if (drug.id === 'midazolam') {
+        score += 25;
+        feedback.push({
+          type: 'success',
+          message: `Excellent first-line choice: Benzodiazepines are the foundation of cocaine toxicity management`
+        });
+        feedback.push({
+          type: 'success',
+          message: `Mechanism: Reduces central sympathetic outflow and controls agitation/seizures. Often sufficient alone for mild-moderate toxicity. If severe HTN persists, add labetalol or phentolamine.`
+        });
+        feedback.push({
+          type: 'success',
+          message: `Clinical approach: Benzodiazepines first → reassess → add α/β blockade if needed. Never β-blockers alone.`
+        });
+      } else if (drug.id === 'phentolamine') {
         score += 15;
         feedback.push({
           type: 'success',
-          message: `Good choice: Phentolamine (α-blocker) safely reduces hypertension without causing unopposed α-stimulation. Combined α/β-blocker (labetalol) may provide additional benefit.`
+          message: `Good choice: Phentolamine (α-blocker) safely reduces hypertension without causing unopposed α-stimulation. Best used after benzodiazepines. Combined α/β-blocker (labetalol) may also be effective.`
         });
       } else if (drug.id === 'carvedilol') {
         score += 15;
         feedback.push({
           type: 'success',
-          message: `Good choice: Carvedilol is also a combined α/β-blocker, similar mechanism to labetalol.`
+          message: `Good choice: Carvedilol is also a combined α/β-blocker, similar mechanism to labetalol. Best used after benzodiazepines.`
         });
       } else {
-        feedback.push({ type: 'warning', message: `Consider labetalol (combined α/β-blocker) for safer management` });
+        feedback.push({ type: 'warning', message: `Consider benzodiazepines first-line, then labetalol (combined α/β-blocker) if needed` });
       }
     } else {
       feedback.push({ type: 'warning', message: `${scenario.optimalDrug} may be more effective` });

@@ -4,8 +4,20 @@ import { formatDose } from '../utils/calculations';
 
 const DrugSelector = ({ drugs, selectedDrug, dose, onSelectDrug, onDoseChange, strategyMatchingDrugs }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('agonists');
 
-  const filteredDrugs = drugs.filter((drug) =>
+  // Categorize drugs
+  const agonistIds = ['epinephrine', 'norepinephrine', 'isoproterenol', 'phenylephrine', 'dobutamine', 'albuterol', 'dopamine', 'ephedrine'];
+  const antagonistIds = ['propranolol', 'metoprolol', 'esmolol', 'labetalol', 'phentolamine', 'prazosin'];
+  const otherIds = ['vasopressin', 'milrinone', 'clonidine', 'midazolam'];
+
+  const categorizedDrugs = {
+    agonists: drugs.filter(d => agonistIds.includes(d.id)),
+    antagonists: drugs.filter(d => antagonistIds.includes(d.id)),
+    other: drugs.filter(d => otherIds.includes(d.id)),
+  };
+
+  const filteredDrugs = categorizedDrugs[activeTab].filter((drug) =>
     drug.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     drug.class.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -29,6 +41,40 @@ const DrugSelector = ({ drugs, selectedDrug, dose, onSelectDrug, onDoseChange, s
       <div className="flex items-center gap-1.5 mb-2 flex-shrink-0">
         <Pill className="w-4 h-4 text-purple-600" />
         <h2 className="text-sm font-bold text-gray-800">Drug Selection</h2>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-1 mb-2 flex-shrink-0">
+        <button
+          onClick={() => setActiveTab('agonists')}
+          className={`flex-1 px-2 py-1 text-xs font-medium rounded transition-colors ${
+            activeTab === 'agonists'
+              ? 'bg-purple-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          Agonists
+        </button>
+        <button
+          onClick={() => setActiveTab('antagonists')}
+          className={`flex-1 px-2 py-1 text-xs font-medium rounded transition-colors ${
+            activeTab === 'antagonists'
+              ? 'bg-purple-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          Antagonists
+        </button>
+        <button
+          onClick={() => setActiveTab('other')}
+          className={`flex-1 px-2 py-1 text-xs font-medium rounded transition-colors ${
+            activeTab === 'other'
+              ? 'bg-purple-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          Other
+        </button>
       </div>
 
       {/* Search */}
