@@ -76,139 +76,130 @@ const PharmacologicalStrategy = ({ drugs, onStrategyChange }) => {
   }, [targetReceptors, drugType, selectivity, drugs, onStrategyChange]);
 
   return (
-    <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg border-2 border-indigo-200 p-3 mb-3">
-      <div className="flex items-center gap-2 mb-3">
-        <Lightbulb className="w-5 h-5 text-indigo-600" />
-        <h3 className="text-sm font-bold text-gray-800">Pharmacological Treatment Strategy</h3>
+    <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg border-2 border-indigo-200 p-2 max-h-[220px] overflow-y-auto">
+      <div className="flex items-center gap-1.5 mb-2">
+        <Lightbulb className="w-4 h-4 text-indigo-600" />
+        <h3 className="text-xs font-bold text-gray-800">Pharmacological Treatment Strategy</h3>
       </div>
 
       {/* Step 1: Target Receptors */}
-      <div className="mb-3">
-        <div className="flex items-center gap-1.5 mb-2">
-          <Target className="w-4 h-4 text-indigo-600" />
+      <div className="mb-2">
+        <div className="flex items-center gap-1 mb-1.5">
+          <Target className="w-3.5 h-3.5 text-indigo-600" />
           <label className="text-xs font-semibold text-gray-700">
-            1. Which receptor(s) do you want to target?
+            1. Target receptor(s)?
           </label>
         </div>
-        <div className="grid grid-cols-1 gap-1.5">
+        <div className="grid grid-cols-2 gap-1">
           {receptorOptions.map(receptor => (
             <button
               key={receptor.id}
               onClick={() => toggleReceptor(receptor.id)}
-              className={`p-2 rounded border-2 text-left transition-all text-xs ${
+              className={`p-1.5 rounded border-2 text-left transition-all ${
                 targetReceptors.includes(receptor.id)
                   ? 'border-indigo-500 bg-indigo-100'
                   : 'border-gray-300 bg-white hover:border-indigo-300'
               }`}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <input
                   type="checkbox"
                   checked={targetReceptors.includes(receptor.id)}
                   onChange={() => {}}
                   className="w-3 h-3"
                 />
-                <div className="flex-1">
-                  <span className="font-bold text-gray-800">{receptor.name}</span>
-                  <span className="text-gray-600 ml-2">({receptor.pathway})</span>
-                </div>
+                <span className="font-bold text-gray-800 text-xs">{receptor.name}</span>
               </div>
+              <div className="text-xs text-gray-600 mt-0.5 leading-tight">{receptor.pathway}</div>
             </button>
           ))}
         </div>
       </div>
 
       {/* Step 2: Drug Type */}
-      <div className="mb-3">
-        <label className="text-xs font-semibold text-gray-700 mb-2 block">
-          2. What type of drug interaction?
+      <div className="mb-2">
+        <label className="text-xs font-semibold text-gray-700 mb-1 block">
+          2. Drug type?
         </label>
-        <div className="grid grid-cols-2 gap-1.5">
+        <div className="grid grid-cols-2 gap-1">
           <button
             onClick={() => setDrugType('agonist')}
-            className={`p-2 rounded border-2 text-xs transition-all ${
+            className={`p-1.5 rounded border-2 text-xs transition-all ${
               drugType === 'agonist'
                 ? 'border-green-500 bg-green-100'
                 : 'border-gray-300 bg-white hover:border-green-300'
             }`}
           >
             <div className="font-semibold text-gray-800">Agonist</div>
-            <div className="text-gray-600 text-xs">Activate receptor</div>
           </button>
           <button
             onClick={() => setDrugType('antagonist')}
-            className={`p-2 rounded border-2 text-xs transition-all ${
+            className={`p-1.5 rounded border-2 text-xs transition-all ${
               drugType === 'antagonist'
                 ? 'border-purple-500 bg-purple-100'
                 : 'border-gray-300 bg-white hover:border-purple-300'
             }`}
           >
             <div className="font-semibold text-gray-800">Antagonist</div>
-            <div className="text-gray-600 text-xs">Block receptor</div>
           </button>
           <button
             onClick={() => setDrugType('partial')}
-            className={`p-2 rounded border-2 text-xs transition-all ${
+            className={`p-1.5 rounded border-2 text-xs transition-all ${
               drugType === 'partial'
                 ? 'border-yellow-500 bg-yellow-100'
                 : 'border-gray-300 bg-white hover:border-yellow-300'
             }`}
           >
-            <div className="font-semibold text-gray-800">Partial Agonist</div>
-            <div className="text-gray-600 text-xs">Submaximal response</div>
+            <div className="font-semibold text-gray-800">Partial</div>
           </button>
           <button
             onClick={() => setDrugType('any')}
-            className={`p-2 rounded border-2 text-xs transition-all ${
+            className={`p-1.5 rounded border-2 text-xs transition-all ${
               drugType === 'any'
                 ? 'border-gray-500 bg-gray-100'
                 : 'border-gray-300 bg-white hover:border-gray-400'
             }`}
           >
-            <div className="font-semibold text-gray-800">Any Type</div>
-            <div className="text-gray-600 text-xs">No preference</div>
+            <div className="font-semibold text-gray-800">Any</div>
           </button>
         </div>
       </div>
 
       {/* Step 3: Selectivity */}
       <div className="mb-2">
-        <label className="text-xs font-semibold text-gray-700 mb-2 block">
-          3. Selectivity needed?
+        <label className="text-xs font-semibold text-gray-700 mb-1 block">
+          3. Selectivity?
         </label>
-        <div className="grid grid-cols-3 gap-1.5">
+        <div className="grid grid-cols-3 gap-1">
           <button
             onClick={() => setSelectivity('selective')}
-            className={`p-2 rounded border-2 text-xs transition-all ${
+            className={`p-1.5 rounded border-2 text-xs transition-all ${
               selectivity === 'selective'
                 ? 'border-blue-500 bg-blue-100'
                 : 'border-gray-300 bg-white hover:border-blue-300'
             }`}
           >
             <div className="font-semibold text-gray-800">Selective</div>
-            <div className="text-gray-600 text-xs">Single receptor</div>
           </button>
           <button
             onClick={() => setSelectivity('nonselective')}
-            className={`p-2 rounded border-2 text-xs transition-all ${
+            className={`p-1.5 rounded border-2 text-xs transition-all ${
               selectivity === 'nonselective'
                 ? 'border-orange-500 bg-orange-100'
                 : 'border-gray-300 bg-white hover:border-orange-300'
             }`}
           >
             <div className="font-semibold text-gray-800">Non-selective</div>
-            <div className="text-gray-600 text-xs">Multiple receptors</div>
           </button>
           <button
             onClick={() => setSelectivity('any')}
-            className={`p-2 rounded border-2 text-xs transition-all ${
+            className={`p-1.5 rounded border-2 text-xs transition-all ${
               selectivity === 'any'
                 ? 'border-gray-500 bg-gray-100'
                 : 'border-gray-300 bg-white hover:border-gray-400'
             }`}
           >
             <div className="font-semibold text-gray-800">Any</div>
-            <div className="text-gray-600 text-xs">No preference</div>
           </button>
         </div>
       </div>
