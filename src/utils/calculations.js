@@ -73,12 +73,44 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
     });
   }
 
+  // Check receptor targeting
+  if (drug && scenario.targetReceptors) {
+    const drugReceptors = drug.receptors || {};
+    const activeReceptors = [];
+
+    // Identify which receptors the drug activates/blocks significantly
+    Object.keys(drugReceptors).forEach(receptor => {
+      const activity = Math.abs(drugReceptors[receptor]);
+      if (activity > 20) {
+        activeReceptors.push(receptor);
+      }
+    });
+
+    // Check if drug targets appropriate receptors for scenario
+    const targetedCorrectly = scenario.targetReceptors.some(target =>
+      activeReceptors.some(active => target.includes(active))
+    );
+
+    if (targetedCorrectly) {
+      score += 20;
+      feedback.push({
+        type: 'success',
+        message: `Good receptor targeting! This scenario benefits from targeting: ${scenario.targetReceptors.join(', ')}`
+      });
+    } else {
+      feedback.push({
+        type: 'warning',
+        message: `Consider drugs targeting: ${scenario.targetReceptors.join(', ')}`
+      });
+    }
+  }
+
   // Check if using optimal drug
   if (drug && scenario.optimalDrug === drug.id) {
-    score += 30;
-    feedback.push({ type: 'success', message: 'Optimal drug selection!' });
+    score += 20;
+    feedback.push({ type: 'success', message: 'Excellent drug choice for this scenario!' });
   } else if (drug && scenario.optimalDrug) {
-    feedback.push({ type: 'warning', message: `Consider ${scenario.optimalDrug} for this scenario` });
+    feedback.push({ type: 'warning', message: `${scenario.optimalDrug} may be more effective` });
   }
 
   // Blood pressure assessment
