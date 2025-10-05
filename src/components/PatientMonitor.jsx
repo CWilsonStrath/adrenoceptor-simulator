@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Heart, Activity, Wind, Droplet, Volume2, VolumeX } from 'lucide-react';
+import { Heart, Activity, Wind, Droplet, Volume2, VolumeX, FlaskConical } from 'lucide-react';
 import ECGMonitor from './ECGMonitor';
+import { calculateReceptorActivation, getReceptorColor } from '../utils/calculations';
 
 const VitalSign = ({ icon: Icon, label, value, unit, status, animate = false }) => {
   const statusColors = {
@@ -31,8 +32,12 @@ const VitalSign = ({ icon: Icon, label, value, unit, status, animate = false }) 
   );
 };
 
-const PatientMonitor = ({ vitals, baseline }) => {
+const PatientMonitor = ({ vitals, baseline, selectedDrug, dose }) => {
   const [soundEnabled, setSoundEnabled] = useState(false);
+
+  const activation = selectedDrug && dose > 0
+    ? calculateReceptorActivation(selectedDrug, dose)
+    : { α1: 0, α2: 0, β1: 0, β2: 0 };
 
   const getHRStatus = (hr) => {
     if (hr < 60 || hr > 100) return hr < 50 || hr > 120 ? 'danger' : 'warning';
@@ -135,6 +140,37 @@ const PatientMonitor = ({ vitals, baseline }) => {
           />
         </div>
       </div>
+
+      {/* Receptor Activation */}
+      {selectedDrug && dose > 0 && (
+        <div className="mt-2 border-t pt-2 flex-shrink-0">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <FlaskConical className="w-3.5 h-3.5 text-green-600" />
+            <h3 className="text-xs font-bold text-gray-800">Receptor Activation</h3>
+          </div>
+          <div className="space-y-1">
+            {[
+              { receptor: 'α₁ (Vasoconstriction)', value: activation.α1 },
+              { receptor: 'α₂ (Presynaptic Inhibition)', value: activation.α2 },
+              { receptor: 'β₁ (Cardiac Stimulation)', value: activation.β1 },
+              { receptor: 'β₂ (Bronchodilation)', value: activation.β2 }
+            ].map(({ receptor, value }) => (
+              <div key={receptor} className="mb-1">
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-xs font-medium text-gray-700">{receptor}</span>
+                  <span className="text-xs font-bold text-gray-800">{Math.round(value)}%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                  <div
+                    className={`h-2.5 rounded-full transition-all duration-500 ${getReceptorColor(value)}`}
+                    style={{ width: `${Math.abs(value)}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

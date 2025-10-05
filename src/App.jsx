@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, ArrowLeft, BookOpen, ChevronDown, ChevronUp, TrendingUp, FlaskConical } from 'lucide-react';
+import { RefreshCw, ArrowLeft, BookOpen, ChevronDown, ChevronUp, TrendingUp } from 'lucide-react';
 import ScenarioSelector from './components/ScenarioSelector';
 import ScenarioInfo from './components/ScenarioInfo';
 import PatientMonitor from './components/PatientMonitor';
 import DrugSelector from './components/DrugSelector';
-import PharmacologyPanel from './components/PharmacologyPanel';
 import PharmacologyAnalysis from './components/PharmacologyAnalysis';
 import PharmacologicalStrategy from './components/PharmacologicalStrategy';
 import PathwayVisualizer from './components/PathwayVisualizer';
@@ -173,9 +172,14 @@ function App() {
 
           {/* Top Row - Patient Monitor and Drug Selection */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-3">
-            {/* Patient Monitor */}
+            {/* Patient Monitor with Receptor Activation */}
             <div className="h-[calc(100vh-280px)]">
-              <PatientMonitor vitals={currentVitals} baseline={selectedScenario.baseline} />
+              <PatientMonitor
+                vitals={currentVitals}
+                baseline={selectedScenario.baseline}
+                selectedDrug={selectedDrug}
+                dose={dose}
+              />
             </div>
 
             {/* Drug Selection */}
@@ -202,17 +206,8 @@ function App() {
             </div>
           </div>
 
-          {/* Bottom Row - Pharmacology and Assessment */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-3">
-            {/* Pharmacology */}
-            <div>
-              <PharmacologyPanel
-                selectedDrug={selectedDrug}
-                dose={dose}
-              />
-            </div>
-
-            {/* Assessment is inside PharmacologyPanel, but we can split if needed */}
+          {/* Bottom Row - Treatment Assessment */}
+          <div className="mb-3">
             <div className="bg-white rounded-lg shadow-lg p-3">
               <div className="flex items-center gap-1.5 mb-2">
                 <TrendingUp className="w-4 h-4 text-green-600" />
