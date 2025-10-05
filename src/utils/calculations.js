@@ -64,13 +64,35 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
   let score = 0;
   const feedback = [];
 
-  // Check for contraindicated drugs
+  // Check for contraindicated drugs - provide detailed educational feedback
   if (drug && scenario.contraindicated && scenario.contraindicated.includes(drug.id)) {
     score -= 50;
-    feedback.push({
-      type: 'danger',
-      message: `⚠️ CONTRAINDICATED! ${drug.name} in ${scenario.name} causes unopposed α-stimulation → severe HTN/coronary vasoconstriction!`
-    });
+
+    // Special educational feedback for cocaine + beta-blocker
+    if (scenario.id === 'cocaine-od' && (drug.id === 'propranolol' || drug.id === 'metoprolol' || drug.id === 'esmolol')) {
+      feedback.push({
+        type: 'danger',
+        message: `⚠️ DANGEROUS CHOICE: Pure β-blocker in cocaine toxicity`
+      });
+      feedback.push({
+        type: 'danger',
+        message: `Mechanism: Cocaine blocks catecholamine reuptake → both α and β receptors are activated. Blocking only β-receptors removes β2-mediated vasodilation while α1-vasoconstriction continues unopposed.`
+      });
+      feedback.push({
+        type: 'danger',
+        message: `Consequence: Unopposed α1 stimulation → severe peripheral vasoconstriction → extreme hypertension, coronary vasospasm, end-organ ischaemia. This can precipitate MI, stroke, or acute limb ischaemia.`
+      });
+      feedback.push({
+        type: 'warning',
+        message: `Correct approach: (1) Benzodiazepines first to reduce sympathetic tone, then (2) combined α/β-blocker (e.g., labetalol) OR α-blocker first (e.g., phentolamine) followed by β-blocker only if needed.`
+      });
+    } else {
+      // Generic contraindication message for other scenarios
+      feedback.push({
+        type: 'danger',
+        message: `⚠️ CONTRAINDICATED: ${drug.name} is dangerous in ${scenario.name}`
+      });
+    }
   }
 
   // Check receptor targeting
@@ -105,12 +127,75 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
     }
   }
 
-  // Check if using optimal drug
+  // Check if using optimal drug - provide detailed educational feedback
   if (drug && scenario.optimalDrug === drug.id) {
     score += 20;
-    feedback.push({ type: 'success', message: 'Excellent drug choice for this scenario!' });
+
+    // Scenario-specific educational feedback
+    if (scenario.id === 'cocaine-od' && drug.id === 'labetalol') {
+      feedback.push({ type: 'success', message: 'Excellent choice: Labetalol is a combined α/β-blocker' });
+      feedback.push({
+        type: 'success',
+        message: `Why this works: Labetalol blocks α1 (reduces vasoconstriction/HTN) AND β (reduces HR/cardiac work) simultaneously. The α-blockade prevents unopposed α-stimulation that occurs with pure β-blockers.`
+      });
+      feedback.push({
+        type: 'success',
+        message: `Clinical pearl: α:β blockade ratio is ~1:7, providing sufficient α-blockade to prevent coronary vasospasm while controlling tachycardia and myocardial oxygen demand.`
+      });
+    } else if (scenario.id === 'anaphylaxis' && drug.id === 'epinephrine') {
+      feedback.push({ type: 'success', message: 'Excellent choice: Epinephrine is first-line for anaphylaxis' });
+      feedback.push({
+        type: 'success',
+        message: `Why this works: Non-selective agonist activating α1 (vasoconstriction → reverses hypotension), β1 (inotropy/chronotropy → improves cardiac output), and β2 (bronchodilation → relieves airway obstruction).`
+      });
+      feedback.push({
+        type: 'success',
+        message: `Multi-receptor activation addresses all three life-threatening features: hypotension, bronchospasm, and cardiovascular collapse.`
+      });
+    } else if (scenario.id === 'septic-shock' && drug.id === 'norepinephrine') {
+      feedback.push({ type: 'success', message: 'Excellent choice: Norepinephrine is first-line for septic shock' });
+      feedback.push({
+        type: 'success',
+        message: `Why this works: Predominantly α1 agonist (vasoconstriction → increases SVR → restores MAP) with some β1 activity (modest inotropy). Addresses the pathophysiology of distributive shock: profound vasodilation.`
+      });
+      feedback.push({
+        type: 'success',
+        message: `Superior to dopamine: More predictable dose-response, less tachycardia/arrhythmia risk, preferred in current sepsis guidelines.`
+      });
+    } else if (scenario.id === 'cardiogenic-shock' && drug.id === 'dobutamine') {
+      feedback.push({ type: 'success', message: 'Excellent choice: Dobutamine for cardiogenic shock' });
+      feedback.push({
+        type: 'success',
+        message: `Why this works: Selective β1 agonist → increases inotropy (contractility) and chronotropy (HR) → improves cardiac output. Minimal α1 activity avoids increasing afterload (SVR), which would worsen pump failure.`
+      });
+      feedback.push({
+        type: 'success',
+        message: `Key principle: In cardiogenic shock, the heart is failing to pump effectively. Dobutamine strengthens contraction without forcing the heart to pump against increased resistance.`
+      });
+    } else {
+      feedback.push({ type: 'success', message: 'Excellent drug choice for this scenario!' });
+    }
   } else if (drug && scenario.optimalDrug) {
-    feedback.push({ type: 'warning', message: `${scenario.optimalDrug} may be more effective` });
+    // Provide helpful suggestions for cocaine scenario
+    if (scenario.id === 'cocaine-od') {
+      if (drug.id === 'phentolamine') {
+        score += 15;
+        feedback.push({
+          type: 'success',
+          message: `Good choice: Phentolamine (α-blocker) safely reduces hypertension without causing unopposed α-stimulation. Combined α/β-blocker (labetalol) may provide additional benefit.`
+        });
+      } else if (drug.id === 'carvedilol') {
+        score += 15;
+        feedback.push({
+          type: 'success',
+          message: `Good choice: Carvedilol is also a combined α/β-blocker, similar mechanism to labetalol.`
+        });
+      } else {
+        feedback.push({ type: 'warning', message: `Consider labetalol (combined α/β-blocker) for safer management` });
+      }
+    } else {
+      feedback.push({ type: 'warning', message: `${scenario.optimalDrug} may be more effective` });
+    }
   }
 
   // Blood pressure assessment
