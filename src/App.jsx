@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, ArrowLeft, BookOpen, ChevronDown, ChevronUp, TrendingUp } from 'lucide-react';
+import { RefreshCw, ArrowLeft, BookOpen, ChevronDown, ChevronUp, TrendingUp, FlaskConical } from 'lucide-react';
 import ScenarioSelector from './components/ScenarioSelector';
 import ScenarioInfo from './components/ScenarioInfo';
 import PatientMonitor from './components/PatientMonitor';
 import DrugSelector from './components/DrugSelector';
 import PharmacologyPanel from './components/PharmacologyPanel';
+import PharmacologyAnalysis from './components/PharmacologyAnalysis';
 import PathwayVisualizer from './components/PathwayVisualizer';
 import { scenarios } from './data/scenarios';
 import { drugs } from './data/drugs';
@@ -17,6 +18,7 @@ function App() {
   const [dose, setDose] = useState(0);
   const [currentVitals, setCurrentVitals] = useState(null);
   const [showPathways, setShowPathways] = useState(false);
+  const [showPharmacology, setShowPharmacology] = useState(false);
 
   // Initialize vitals when scenario changes
   useEffect(() => {
@@ -230,6 +232,30 @@ function App() {
                 <p className="text-gray-600 text-center py-8 text-sm">Select a drug to view treatment assessment</p>
               )}
             </div>
+          </div>
+
+          {/* Pharmacology Analysis - Collapsible */}
+          <div className="mb-3">
+            <button
+              onClick={() => setShowPharmacology(!showPharmacology)}
+              className="w-full bg-white rounded-lg shadow-lg p-3 flex items-center justify-between hover:bg-gray-50 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <FlaskConical className="w-5 h-5 text-indigo-600" />
+                <h2 className="text-lg font-bold text-gray-800">Advanced Pharmacology Analysis</h2>
+                <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded">EC₅₀, Emax, Dose-Response</span>
+              </div>
+              {showPharmacology ? (
+                <ChevronUp className="w-5 h-5 text-gray-600" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-gray-600" />
+              )}
+            </button>
+            {showPharmacology && (
+              <div className="mt-3">
+                <PharmacologyAnalysis selectedDrug={selectedDrug} dose={dose} />
+              </div>
+            )}
           </div>
 
           {/* Pathway Visualizer - Collapsible */}
