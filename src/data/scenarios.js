@@ -124,7 +124,7 @@ export const scenarios = [
       co: 8.5,
       bronchodilation: 100,
     },
-    pathophysiology: 'Excessive sympathetic stimulation via catecholamine reuptake blockade causing simultaneous α and β receptor activation',
+    pathophysiology: 'Blocks reuptake of norepinephrine and dopamine at nerve terminals, prolonging sympathetic nervous system effects and causing severe hypertension with tachycardia',
     targetReceptors: ['Benzodiazepines', 'α-blocker', 'Combined α/β-blocker'],
     optimalDrug: 'labetalol', // Combined α/β blocker is safe
     contraindicated: ['propranolol', 'metoprolol', 'esmolol'], // Pure β-blockers
