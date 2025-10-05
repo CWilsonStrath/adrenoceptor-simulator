@@ -52,6 +52,7 @@ export const scenarios = [
     pathophysiology: 'Airway inflammation and smooth muscle constriction',
     targetReceptors: ['β2'],
     optimalDrug: 'albuterol',
+    hidden: true,
   },
   {
     id: 'cardiogenic-shock',
@@ -88,6 +89,7 @@ export const scenarios = [
     pathophysiology: 'Decreased heart rate leading to inadequate cardiac output',
     targetReceptors: ['β1', 'β2'],
     optimalDrug: 'isoproterenol',
+    hidden: true,
   },
   {
     id: 'spinal-hypotension',
@@ -106,6 +108,7 @@ export const scenarios = [
     pathophysiology: 'Loss of sympathetic tone causing vasodilation and bradycardia',
     targetReceptors: ['α1'],
     optimalDrug: 'phenylephrine',
+    hidden: true,
   },
   {
     id: 'cocaine-od',
@@ -143,5 +146,6 @@ export const scenarios = [
     pathophysiology: 'Excessive thyroid hormone causing hypermetabolic state with increased catecholamine sensitivity',
     targetReceptors: ['β-blocker'],
     optimalDrug: 'propranolol', // Also blocks T4→T3 conversion
+    hidden: true,
   },
 ];

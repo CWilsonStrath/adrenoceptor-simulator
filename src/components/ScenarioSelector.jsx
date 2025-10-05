@@ -2,6 +2,8 @@ import React from 'react';
 import { Activity } from 'lucide-react';
 
 const ScenarioSelector = ({ scenarios, selectedScenario, onSelectScenario }) => {
+  const visibleScenarios = scenarios.filter(scenario => !scenario.hidden);
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
       <div className="flex items-center gap-2 mb-4">
@@ -10,7 +12,7 @@ const ScenarioSelector = ({ scenarios, selectedScenario, onSelectScenario }) => 
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {scenarios.map((scenario) => (
+        {visibleScenarios.map((scenario) => (
           <button
             key={scenario.id}
             onClick={() => onSelectScenario(scenario)}
