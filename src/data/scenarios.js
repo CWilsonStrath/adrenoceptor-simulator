@@ -52,7 +52,6 @@ export const scenarios = [
     pathophysiology: 'Airway inflammation and smooth muscle constriction',
     targetReceptors: ['β2'],
     optimalDrug: 'albuterol',
-    hidden: true,
   },
   {
     id: 'cardiogenic-shock',
@@ -71,6 +70,7 @@ export const scenarios = [
     pathophysiology: 'Myocardial dysfunction with inadequate cardiac output',
     targetReceptors: ['β1'],
     optimalDrug: 'dobutamine',
+    hidden: true,
   },
   {
     id: 'bradycardia',

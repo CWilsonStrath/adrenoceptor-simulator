@@ -162,15 +162,15 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         type: 'success',
         message: `Superior to dopamine: More predictable dose-response, less tachycardia/arrhythmia risk, preferred in current sepsis guidelines.`
       });
-    } else if (scenario.id === 'cardiogenic-shock' && drug.id === 'dobutamine') {
-      feedback.push({ type: 'success', message: 'Excellent choice: Dobutamine for cardiogenic shock' });
+    } else if (scenario.id === 'asthma' && drug.id === 'albuterol') {
+      feedback.push({ type: 'success', message: 'Excellent choice: Albuterol is first-line for acute asthma' });
       feedback.push({
         type: 'success',
-        message: `Why this works: Selective β1 agonist → increases inotropy (contractility) and chronotropy (HR) → improves cardiac output. Minimal α1 activity avoids increasing afterload (SVR), which would worsen pump failure.`
+        message: `Why this works: Selective β2 agonist → relaxes bronchial smooth muscle → bronchodilation → improved airflow → increased SpO₂. Minimal β1 activity reduces cardiac side effects (tachycardia, tremor).`
       });
       feedback.push({
         type: 'success',
-        message: `Key principle: In cardiogenic shock, the heart is failing to pump effectively. Dobutamine strengthens contraction without forcing the heart to pump against increased resistance.`
+        message: `Selectivity advantage: Non-selective β agonists (like isoproterenol) also cause bronchodilation but produce unwanted β1 effects (tachycardia). β2-selectivity provides therapeutic benefit with fewer side effects.`
       });
     } else {
       feedback.push({ type: 'success', message: 'Excellent drug choice for this scenario!' });
