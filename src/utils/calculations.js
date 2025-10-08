@@ -86,6 +86,24 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         type: 'warning',
         message: `Correct approach: (1) Benzodiazepines first to reduce sympathetic tone, then (2) combined α/β-blocker (e.g., labetalol) OR α-blocker first (e.g., phentolamine) followed by β-blocker only if needed.`
       });
+    } else if (scenario.id === 'anaphylaxis' && (drug.id === 'propranolol' || drug.id === 'metoprolol' || drug.id === 'esmolol')) {
+      // Special educational feedback for anaphylaxis + beta-blocker
+      feedback.push({
+        type: 'danger',
+        message: `⚠️ DANGEROUS CHOICE: β-blocker in anaphylaxis`
+      });
+      feedback.push({
+        type: 'danger',
+        message: `Mechanism: Anaphylaxis causes bronchospasm (airway smooth muscle constriction) and cardiovascular collapse. β2-blockade prevents bronchodilation, and β1-blockade prevents compensatory tachycardia and inotropy needed to maintain cardiac output.`
+      });
+      feedback.push({
+        type: 'danger',
+        message: `Consequence: β2-blockade → severe refractory bronchospasm → life-threatening hypoxia. β1-blockade → cannot mount compensatory cardiovascular response → worsening shock. This is especially dangerous in patients on chronic β-blockers.`
+      });
+      feedback.push({
+        type: 'warning',
+        message: `Correct approach: Epinephrine (α1 + β1 + β2 agonist) addresses all three mechanisms: α1 → vasoconstriction (↑BP), β1 → inotropy/chronotropy (↑CO), β2 → bronchodilation (↑SpO₂). Patients on chronic β-blockers may need higher epinephrine doses or glucagon.`
+      });
     } else {
       // Generic contraindication message for other scenarios
       feedback.push({
@@ -236,7 +254,7 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
           message: `Good choice: Carvedilol is also a combined α/β-blocker, similar mechanism to labetalol. Best used after benzodiazepines.`
         });
       } else {
-        feedback.push({ type: 'warning', message: `Consider benzodiazepines first-line, then labetalol (combined α/β-blocker) if needed` });
+        feedback.push({ type: 'warning', message: `Suboptimal choice. Consider: benzodiazepines to reduce sympathetic tone, or combined α/β-blockade to safely manage both hypertension and tachycardia` });
       }
     } else if (scenario.id === 'anaphylaxis') {
       // Educational feedback for suboptimal choices in anaphylaxis
@@ -252,7 +270,7 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         });
         feedback.push({
           type: 'warning',
-          message: `Correct approach: Epinephrine provides simultaneous α1 + β1 + β2 activation to address all three life threats: hypotension, bronchospasm, and cardiovascular collapse.`
+          message: `What's needed: Simultaneous α1 + β1 + β2 activation to address all three life threats: hypotension (α1), cardiovascular collapse (β1), and bronchospasm (β2). Consider a non-selective adrenergic agonist.`
         });
       } else if (drug.id === 'phenylephrine') {
         score += 5;
@@ -266,7 +284,7 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         });
         feedback.push({
           type: 'warning',
-          message: `Correct approach: Epinephrine's multi-receptor profile (α1 + β1 + β2) addresses both cardiovascular collapse AND respiratory failure simultaneously.`
+          message: `What's needed: Multi-receptor activation (α1 + β1 + β2) to address both cardiovascular collapse AND respiratory failure simultaneously. Consider a non-selective adrenergic agonist.`
         });
       } else if (drug.id === 'norepinephrine') {
         score += 10;
@@ -276,14 +294,14 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         });
         feedback.push({
           type: 'warning',
-          message: `Why suboptimal: Strong α1 + β1 effects improve MAP and cardiac output, but weak β2 activity provides inadequate bronchodilation. In severe anaphylaxis with significant bronchospasm, epinephrine's robust β2 effect is critical.`
+          message: `Why suboptimal: Strong α1 + β1 effects improve MAP and cardiac output, but weak β2 activity provides inadequate bronchodilation. In severe anaphylaxis with significant bronchospasm, robust β2 activation is critical.`
         });
         feedback.push({
           type: 'warning',
-          message: `Clinical note: Norepinephrine may be used as adjunct for refractory hypotension AFTER epinephrine, but epinephrine remains first-line for its balanced multi-receptor activation.`
+          message: `What's needed: Balanced multi-receptor activation (α1 + β1 + β2). Consider a non-selective adrenergic agonist with strong activity at all three receptors.`
         });
       } else {
-        feedback.push({ type: 'warning', message: `Epinephrine is first-line for anaphylaxis - provides essential multi-receptor activation (α1 + β1 + β2)` });
+        feedback.push({ type: 'warning', message: `Suboptimal choice. This scenario requires multi-receptor activation: α1 (vasoconstriction), β1 (inotropy), and β2 (bronchodilation). Consider a non-selective adrenergic agonist.` });
       }
     } else if (scenario.id === 'septic-shock') {
       // Educational feedback for suboptimal choices in septic shock
@@ -291,15 +309,15 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         score += 10;
         feedback.push({
           type: 'warning',
-          message: `Suboptimal choice: Dopamine can increase MAP but has significant drawbacks vs. norepinephrine`
+          message: `Suboptimal choice: Dopamine can increase MAP but has significant drawbacks`
         });
         feedback.push({
           type: 'warning',
-          message: `Why suboptimal: Dose-dependent effects (dopaminergic at low dose → β at medium → α at high) make response unpredictable. More arrhythmogenic. Causes more tachycardia (↑myocardial O₂ demand). Surviving Sepsis guidelines recommend norepinephrine over dopamine.`
+          message: `Why suboptimal: Dose-dependent effects (dopaminergic at low dose → β at medium → α at high) make response unpredictable. More arrhythmogenic. Causes more tachycardia (↑myocardial O₂ demand). Current guidelines recommend more selective agents.`
         });
         feedback.push({
           type: 'warning',
-          message: `Mechanism comparison: Both increase SVR, but norepinephrine provides more predictable α1 vasoconstriction with less β1-mediated tachycardia than dopamine at equivalent pressor doses.`
+          message: `What's needed: More predictable α1 vasoconstriction with modest β1 inotropy. Consider a predominantly α1 agonist with some β1 activity.`
         });
       } else if (drug.id === 'phenylephrine') {
         score += 5;
@@ -309,11 +327,11 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         });
         feedback.push({
           type: 'warning',
-          message: `Why suboptimal: Pure α1 vasoconstriction increases SVR and MAP, but lacks the modest β1 inotropic support that norepinephrine provides. In septic shock with some degree of myocardial depression, the β1 component is beneficial.`
+          message: `Why suboptimal: Pure α1 vasoconstriction increases SVR and MAP, but lacks modest β1 inotropic support. In septic shock with some degree of myocardial depression, combined α1 + β1 activity is beneficial.`
         });
         feedback.push({
           type: 'warning',
-          message: `Clinical note: Phenylephrine may be used if tachycardia is problematic, but norepinephrine's balanced α1 + β1 profile is generally preferred. Consider adding inotrope (dobutamine) if cardiac output remains low.`
+          message: `What's needed: Predominantly α1 vasoconstriction with modest β1 inotropy. Consider an agent with balanced α1 + β1 activity.`
         });
       } else if (drug.id === 'epinephrine') {
         score += 10;
@@ -323,14 +341,14 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         });
         feedback.push({
           type: 'warning',
-          message: `Why not first-line: Non-selective α/β agonism → strong vasoconstriction + strong inotropy, but β2-mediated vasodilation in some vascular beds and more tachycardia/arrhythmia risk than norepinephrine. Usually added when norepinephrine alone insufficient.`
+          message: `Why not first-line: Non-selective α/β agonism → strong vasoconstriction + strong inotropy, but β2-mediated vasodilation in some vascular beds and more tachycardia/arrhythmia risk. Usually reserved for refractory shock.`
         });
         feedback.push({
           type: 'warning',
-          message: `Sepsis guidelines: Norepinephrine first-line, epinephrine as second-line adjunct or alternative if norepinephrine unavailable. Both increase MAP, but norepinephrine has more predictable hemodynamic profile.`
+          message: `What's preferred: Predominantly α1 activity with modest β1 support provides more predictable hemodynamic profile for first-line management. Consider an α1-predominant agent.`
         });
       } else {
-        feedback.push({ type: 'warning', message: `Norepinephrine is first-line for septic shock - provides predominantly α1 vasoconstriction with beneficial β1 inotropy` });
+        feedback.push({ type: 'warning', message: `Suboptimal choice. This distributive shock requires predominantly α1 vasoconstriction with modest β1 inotropy. Consider an α1-predominant agonist.` });
       }
     } else if (scenario.id === 'asthma') {
       // Educational feedback for suboptimal choices in asthma
@@ -346,7 +364,7 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         });
         feedback.push({
           type: 'warning',
-          message: `Selectivity principle: β2-selective agents (albuterol, salbutamol) provide bronchodilation with minimal β1 cardiac effects. This is a key example of how receptor selectivity reduces side effects while maintaining therapeutic efficacy.`
+          message: `Selectivity principle: β2-selective agents provide bronchodilation with minimal β1 cardiac effects. This is a key example of how receptor selectivity reduces side effects while maintaining therapeutic efficacy.`
         });
       } else if (drug.id === 'epinephrine') {
         score += 15;
@@ -360,13 +378,13 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         });
         feedback.push({
           type: 'warning',
-          message: `Clinical indication: Epinephrine reserved for life-threatening asthma exacerbations or anaphylaxis with bronchospasm, where multi-receptor effects are needed. For routine acute asthma, β2-selective agents (albuterol) provide better therapeutic index.`
+          message: `Clinical indication: Non-selective adrenergic agonists are reserved for life-threatening asthma or anaphylaxis with bronchospasm, where multi-receptor effects are needed. For routine acute asthma, β2-selective agents provide better therapeutic index.`
         });
       } else {
-        feedback.push({ type: 'warning', message: `Albuterol (β2-selective agonist) is first-line for acute asthma - provides bronchodilation with minimal cardiac effects` });
+        feedback.push({ type: 'warning', message: `Suboptimal choice. This scenario requires selective β2 agonism for bronchodilation with minimal cardiac side effects. Consider a β2-selective agonist.` });
       }
     } else {
-      feedback.push({ type: 'warning', message: `${scenario.optimalDrug} may be more effective` });
+      feedback.push({ type: 'warning', message: `Suboptimal choice. Consider other agents that better match the pathophysiology and target receptor profile for this scenario.` });
     }
   }
 

@@ -16,6 +16,7 @@ export const scenarios = [
     pathophysiology: 'Massive histamine release causing vasodilation, increased vascular permeability, and bronchospasm',
     targetReceptors: ['α1', 'β1', 'β2'],
     optimalDrug: 'epinephrine',
+    contraindicated: ['propranolol', 'metoprolol', 'esmolol'], // β-blockers worsen bronchospasm and prevent compensation
   },
   {
     id: 'septic-shock',
