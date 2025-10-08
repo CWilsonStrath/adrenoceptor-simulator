@@ -365,12 +365,12 @@ export const drugs = [
       route: 'IV',
     },
     effects: {
-      hr: { min: -40, max: -15 },
-      sbp: { min: -30, max: -10 },
-      dbp: { min: -20, max: -5 },
+      hr: { min: -15, max: -40 },
+      sbp: { min: -10, max: -30 },
+      dbp: { min: -5, max: -20 },
       svr: { min: 0, max: 100 },
-      co: { min: -2.0, max: -0.5 },
-      bronchodilation: { min: -30, max: -10 }, // Bronchoconstriction risk
+      co: { min: -0.5, max: -2.0 },
+      bronchodilation: { min: -10, max: -30 }, // Bronchoconstriction risk
     },
     indications: ['Thyroid storm', 'Tachyarrhythmias', 'Hypertension'],
     halfLife: 240, // 4 hours
@@ -399,12 +399,12 @@ export const drugs = [
       route: 'IV',
     },
     effects: {
-      hr: { min: -35, max: -10 },
-      sbp: { min: -25, max: -10 },
-      dbp: { min: -15, max: -5 },
+      hr: { min: -10, max: -35 },
+      sbp: { min: -10, max: -25 },
+      dbp: { min: -5, max: -15 },
       svr: { min: 0, max: 50 },
-      co: { min: -1.5, max: -0.3 },
-      bronchodilation: { min: -10, max: 0 }, // Less bronchospasm than propranolol
+      co: { min: -0.3, max: -1.5 },
+      bronchodilation: { min: 0, max: -10 }, // Less bronchospasm than propranolol
     },
     indications: ['Acute MI', 'Hypertension', 'Atrial fibrillation'],
     halfLife: 180, // 3 hours
@@ -433,12 +433,12 @@ export const drugs = [
       route: 'IV infusion',
     },
     effects: {
-      hr: { min: -30, max: -10 },
-      sbp: { min: -20, max: -5 },
-      dbp: { min: -15, max: -5 },
+      hr: { min: -10, max: -30 },
+      sbp: { min: -5, max: -20 },
+      dbp: { min: -5, max: -15 },
       svr: { min: 0, max: 30 },
-      co: { min: -1.2, max: -0.2 },
-      bronchodilation: { min: -5, max: 0 },
+      co: { min: -0.2, max: -1.2 },
+      bronchodilation: { min: 0, max: -5 },
     },
     indications: ['Perioperative tachycardia', 'Hypertensive emergency', 'Thyroid storm'],
     halfLife: 9, // 9 minutes
@@ -467,12 +467,12 @@ export const drugs = [
       route: 'IV',
     },
     effects: {
-      hr: { min: -20, max: -5 },
-      sbp: { min: -40, max: -15 },
-      dbp: { min: -30, max: -10 },
-      svr: { min: -200, max: -50 }, // Alpha blockade reduces SVR
+      hr: { min: -5, max: -20 },
+      sbp: { min: -15, max: -40 },
+      dbp: { min: -10, max: -30 },
+      svr: { min: -50, max: -200 }, // Alpha blockade reduces SVR
       co: { min: -0.5, max: 0.5 },
-      bronchodilation: { min: -10, max: 0 },
+      bronchodilation: { min: 0, max: -10 },
     },
     indications: ['Hypertensive emergency', 'Cocaine toxicity', 'Preeclampsia'],
     halfLife: 300, // 5 hours
@@ -502,9 +502,9 @@ export const drugs = [
     },
     effects: {
       hr: { min: 10, max: 30 }, // Reflex tachycardia
-      sbp: { min: -50, max: -20 },
-      dbp: { min: -40, max: -15 },
-      svr: { min: -600, max: -200 },
+      sbp: { min: -20, max: -50 },
+      dbp: { min: -15, max: -40 },
+      svr: { min: -200, max: -600 },
       co: { min: 0.5, max: 1.5 },
       bronchodilation: { min: 0, max: 0 },
     },
@@ -536,9 +536,9 @@ export const drugs = [
     },
     effects: {
       hr: { min: 5, max: 15 }, // Mild reflex tachycardia
-      sbp: { min: -30, max: -10 },
-      dbp: { min: -25, max: -10 },
-      svr: { min: -400, max: -100 },
+      sbp: { min: -10, max: -30 },
+      dbp: { min: -10, max: -25 },
+      svr: { min: -100, max: -400 },
       co: { min: 0.2, max: 0.8 },
       bronchodilation: { min: 0, max: 0 },
     },
@@ -569,11 +569,11 @@ export const drugs = [
       route: 'IV/PO',
     },
     effects: {
-      hr: { min: -20, max: -5 },
-      sbp: { min: -40, max: -15 },
-      dbp: { min: -30, max: -10 },
-      svr: { min: -300, max: -100 },
-      co: { min: -0.5, max: 0 },
+      hr: { min: -5, max: -20 },
+      sbp: { min: -15, max: -40 },
+      dbp: { min: -10, max: -30 },
+      svr: { min: -100, max: -300 },
+      co: { min: 0, max: -0.5 },
       bronchodilation: { min: 0, max: 0 },
     },
     indications: ['Hypertensive emergency', 'Opioid/alcohol withdrawal', 'ADHD'],
@@ -603,11 +603,11 @@ export const drugs = [
       route: 'IV',
     },
     effects: {
-      hr: { min: -15, max: -5 },
-      sbp: { min: -30, max: -10 },
-      dbp: { min: -20, max: -5 },
-      svr: { min: -200, max: -50 },
-      co: { min: -0.5, max: 0 },
+      hr: { min: -5, max: -15 },
+      sbp: { min: -10, max: -30 },
+      dbp: { min: -5, max: -20 },
+      svr: { min: -50, max: -200 },
+      co: { min: 0, max: -0.5 },
       bronchodilation: { min: 0, max: 0 },
     },
     indications: ['Cocaine toxicity (first-line)', 'Sedation', 'Seizures', 'Agitation'],
