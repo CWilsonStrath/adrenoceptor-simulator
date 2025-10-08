@@ -98,20 +98,39 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
   // Check receptor targeting
   if (drug && scenario.targetReceptors) {
     const drugReceptors = drug.receptors || {};
-    const activeReceptors = [];
-
-    // Identify which receptors the drug activates/blocks significantly
-    Object.keys(drugReceptors).forEach(receptor => {
-      const activity = Math.abs(drugReceptors[receptor]);
-      if (activity > 20) {
-        activeReceptors.push(receptor);
-      }
-    });
 
     // Check if drug targets appropriate receptors for scenario
-    const targetedCorrectly = scenario.targetReceptors.some(target =>
-      activeReceptors.some(active => target.includes(active))
-    );
+    let targetedCorrectly = false;
+
+    scenario.targetReceptors.forEach(target => {
+      // Check if target requires blockade (antagonist)
+      const needsBlockade = target.toLowerCase().includes('blocker') || target.toLowerCase().includes('blockade');
+
+      // Check for specific receptor targeting
+      Object.keys(drugReceptors).forEach(receptor => {
+        const activity = drugReceptors[receptor];
+
+        if (needsBlockade) {
+          // Target requires antagonism - check for negative values
+          if (target.includes(receptor) && activity < -20) {
+            targetedCorrectly = true;
+          }
+        } else {
+          // Target requires agonism - check for positive values
+          if (target.includes(receptor) && activity > 20) {
+            targetedCorrectly = true;
+          }
+        }
+      });
+
+      // For non-receptor-specific targets (like "Benzodiazepines")
+      if (target === 'Benzodiazepines' && drug.class === 'Benzodiazepine') {
+        targetedCorrectly = true;
+      }
+      if (target === 'Combined α/β-blocker' && drug.class === 'Combined α/β-blocker') {
+        targetedCorrectly = true;
+      }
+    });
 
     if (targetedCorrectly) {
       score += 20;
