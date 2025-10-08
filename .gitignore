@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .claude/
+
+# Handbooks (keep local only)
+STUDENT_HANDBOOK.md
+PHARMACOLOGY_HANDBOOK.md
