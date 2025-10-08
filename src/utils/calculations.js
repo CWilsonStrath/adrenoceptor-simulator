@@ -72,37 +72,37 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
     if (scenario.id === 'cocaine-od' && (drug.id === 'propranolol' || drug.id === 'metoprolol' || drug.id === 'esmolol')) {
       feedback.push({
         type: 'danger',
-        message: `⚠️ DANGEROUS CHOICE: Pure β-blocker in cocaine toxicity`
+        message: `⚠️ DANGEROUS: Selective β-blockade with elevated endogenous catecholamines`
       });
       feedback.push({
         type: 'danger',
-        message: `Mechanism: Cocaine blocks catecholamine reuptake → both α and β receptors are activated. Blocking only β-receptors removes β2-mediated vasodilation while α1-vasoconstriction continues unopposed.`
+        message: `Pharmacological mechanism: Cocaine blocks norepinephrine reuptake transporters → ↑synaptic catecholamines → simultaneous activation of α1, β1, and β2 receptors. Selective β-antagonism blocks β2-mediated vasodilation (Gs → ↓cAMP in vascular smooth muscle) while leaving α1-vasoconstriction (Gq → ↑IP₃/Ca²⁺) unopposed.`
       });
       feedback.push({
         type: 'danger',
-        message: `Consequence: Unopposed α1 stimulation → severe peripheral vasoconstriction → extreme hypertension, coronary vasospasm, end-organ ischaemia. This can precipitate MI, stroke, or acute limb ischaemia.`
+        message: `Unopposed α1-stimulation: Loss of β2-mediated vasodilatory balance → severe α1-mediated vasoconstriction → extreme peripheral resistance and coronary vasospasm. This illustrates a critical principle: blocking one receptor subtype can unmask effects of other activated subtypes.`
       });
       feedback.push({
         type: 'warning',
-        message: `Correct approach: (1) Benzodiazepines first to reduce sympathetic tone, then (2) combined α/β-blocker (e.g., labetalol) OR α-blocker first (e.g., phentolamine) followed by β-blocker only if needed.`
+        message: `Receptor-based solution: Combined α/β-blockade (e.g., labetalol) or α-blockade first, then β-blockade. This prevents unopposed α1 activation by ensuring balanced antagonism across receptor subtypes.`
       });
     } else if (scenario.id === 'anaphylaxis' && (drug.id === 'propranolol' || drug.id === 'metoprolol' || drug.id === 'esmolol')) {
       // Special educational feedback for anaphylaxis + beta-blocker
       feedback.push({
         type: 'danger',
-        message: `⚠️ DANGEROUS CHOICE: β-blocker in anaphylaxis`
+        message: `⚠️ DANGEROUS: β-antagonism blocks compensatory adrenergic responses`
       });
       feedback.push({
         type: 'danger',
-        message: `Mechanism: Anaphylaxis causes bronchospasm (airway smooth muscle constriction) and cardiovascular collapse. β2-blockade prevents bronchodilation, and β1-blockade prevents compensatory tachycardia and inotropy needed to maintain cardiac output.`
+        message: `Pharmacological mechanism: Anaphylaxis requires both β1 (cardiac Gs → ↑cAMP → ↑inotropy/chronotropy) and β2 (bronchial Gs → ↑cAMP → smooth muscle relaxation) receptor activation. Competitive β-antagonism blocks endogenous epinephrine from accessing these receptors, preventing compensatory cardiovascular and bronchial responses.`
       });
       feedback.push({
         type: 'danger',
-        message: `Consequence: β2-blockade → severe refractory bronchospasm → life-threatening hypoxia. β1-blockade → cannot mount compensatory cardiovascular response → worsening shock. This is especially dangerous in patients on chronic β-blockers.`
+        message: `Receptor blockade consequences: β2-antagonism → prevents cAMP-mediated bronchial smooth muscle relaxation → refractory bronchospasm. β1-antagonism → prevents compensatory cardiac output increase → worsening shock. This demonstrates how antagonists prevent agonist-receptor binding even when endogenous agonist levels are elevated.`
       });
       feedback.push({
         type: 'warning',
-        message: `Correct approach: Epinephrine (α1 + β1 + β2 agonist) addresses all three mechanisms: α1 → vasoconstriction (↑BP), β1 → inotropy/chronotropy (↑CO), β2 → bronchodilation (↑SpO₂). Patients on chronic β-blockers may need higher epinephrine doses or glucagon.`
+        message: `Receptor-based solution: Non-selective adrenergic agonist with high efficacy at α1, β1, and β2 receptors needed. In chronic β-blocker patients, higher agonist doses may be required to overcome competitive antagonism, or alternative signaling pathways (e.g., glucagon → bypasses β-receptors) may be needed.`
       });
     } else {
       // Generic contraindication message for other scenarios
@@ -170,56 +170,56 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
 
     // Scenario-specific educational feedback
     if (scenario.id === 'cocaine-od' && drug.id === 'labetalol') {
-      feedback.push({ type: 'success', message: 'Excellent choice: Labetalol is a combined α/β-blocker' });
+      feedback.push({ type: 'success', message: 'Excellent receptor profile match: Combined α1/β antagonist' });
       feedback.push({
         type: 'success',
-        message: `Why this works: Labetalol blocks α1 (reduces vasoconstriction/HTN) AND β (reduces HR/cardiac work) simultaneously. The α-blockade prevents unopposed α-stimulation that occurs with pure β-blockers.`
+        message: `Receptor pharmacology: Competitive antagonist at α1 (Kd ~75nM), β1 (Kd ~19nM), and β2 (Kd ~45nM) receptors. Blocks both α1-mediated vasoconstriction and β-mediated cardiac effects simultaneously. The α:β blockade ratio (~1:7) means β-blockade predominates, but sufficient α1-antagonism prevents unopposed α-stimulation that occurs with selective β-blockers.`
       });
       feedback.push({
         type: 'success',
-        message: `Clinical pearl: α:β blockade ratio is ~1:7, providing sufficient α-blockade to prevent coronary vasospasm while controlling tachycardia and myocardial oxygen demand.`
+        message: `Competitive antagonism principle: Labetalol competes with endogenous catecholamines for receptor binding sites. In cocaine toxicity, elevated synaptic norepinephrine activates both α and β receptors - blocking both receptor subtypes addresses the full spectrum of adrenergic overstimulation.`
       });
     } else if (scenario.id === 'anaphylaxis' && drug.id === 'epinephrine') {
-      feedback.push({ type: 'success', message: 'Excellent choice: Epinephrine is first-line for anaphylaxis' });
+      feedback.push({ type: 'success', message: 'Excellent receptor profile match: Non-selective adrenergic agonist' });
       feedback.push({
         type: 'success',
-        message: `Why this works: Non-selective agonist activating α1 (vasoconstriction → reverses hypotension), β1 (inotropy/chronotropy → improves cardiac output), and β2 (bronchodilation → relieves airway obstruction).`
+        message: `Receptor pharmacology: Full agonist at α1, β1, and β2 receptors (Emax ~100% at all three). α1 activation → Gq coupling → ↑IP₃/Ca²⁺ → vascular smooth muscle contraction. β1 activation → Gs coupling → ↑cAMP → ↑cardiac contractility and rate. β2 activation → Gs coupling → ↑cAMP → bronchial smooth muscle relaxation.`
       });
       feedback.push({
         type: 'success',
-        message: `Pathophysiology correlation: Massive histamine release causes vasodilation (↓SVR), increased capillary permeability (↓preload), and bronchospasm. Epinephrine addresses all three mechanisms simultaneously.`
+        message: `Multi-receptor advantage: Non-selective binding addresses all three pathophysiological mechanisms simultaneously. High affinity at all subtypes (Kd values: α1≈30nM, β1≈25nM, β2≈20nM) ensures effective receptor occupancy at therapeutic doses.`
       });
       feedback.push({
         type: 'success',
-        message: `Clinical pearl: IM administration (0.3-0.5mg of 1:1000) preferred for initial management. Can repeat every 5-15 minutes. IV route reserved for refractory shock. Multi-receptor activation is essential - selective agents (e.g., albuterol alone) won't reverse hypotension.`
+        message: `Selectivity consideration: Selective agonists (e.g., β2-selective agents) would only address bronchospasm, leaving hypotension untreated. This demonstrates why non-selectivity is sometimes therapeutically advantageous despite increased side effects.`
       });
     } else if (scenario.id === 'septic-shock' && drug.id === 'norepinephrine') {
-      feedback.push({ type: 'success', message: 'Excellent choice: Norepinephrine is first-line for septic shock' });
+      feedback.push({ type: 'success', message: 'Excellent receptor profile match: Predominantly α1 with modest β1 activity' });
       feedback.push({
         type: 'success',
-        message: `Why this works: Predominantly α1 agonist (vasoconstriction → increases SVR → restores MAP) with some β1 activity (modest inotropy). Addresses the pathophysiology of distributive shock: profound vasodilation.`
+        message: `Receptor selectivity: Full agonist at α1 (Emax 100%, EC₅₀ ~45nM) and β1 (Emax 100%, EC₅₀ ~35nM), but weak activity at β2 (Emax 25%, EC₅₀ ~200nM). This selective profile produces predominantly α1-mediated vasoconstriction (Gq → ↑IP₃/Ca²⁺) with supportive β1 inotropy (Gs → ↑cAMP), while avoiding β2-mediated vasodilation.`
       });
       feedback.push({
         type: 'success',
-        message: `Pathophysiology correlation: Systemic inflammation causes endothelial dysfunction and nitric oxide release → loss of vascular tone → ↓SVR despite ↑CO. Norepinephrine restores vascular tone without excessive tachycardia.`
+        message: `Dose-response advantage: Predictable linear relationship between dose and α1-mediated vasoconstriction. Unlike dopamine (dose-dependent receptor switching), norepinephrine maintains consistent α1 > β1 selectivity across therapeutic dose range.`
       });
       feedback.push({
         type: 'success',
-        message: `Clinical pearl: Superior to dopamine (more predictable dose-response, less arrhythmogenic, less tachycardia). Surviving Sepsis guidelines recommend norepinephrine as first-line vasopressor. Target MAP ≥65 mmHg. Pure α1 agonists (phenylephrine) lack the beneficial β1 inotropy.`
+        message: `Selectivity rationale: Pure α1 agonists (e.g., phenylephrine) lack beneficial β1 cardiac effects. Non-selective agents (e.g., epinephrine) cause problematic β2-mediated vasodilation and arrhythmias. Norepinephrine's α1 + β1 profile optimally balances these effects.`
       });
     } else if (scenario.id === 'asthma' && drug.id === 'albuterol') {
-      feedback.push({ type: 'success', message: 'Excellent choice: Albuterol is first-line for acute asthma' });
+      feedback.push({ type: 'success', message: 'Excellent receptor profile match: Selective β2 agonist' });
       feedback.push({
         type: 'success',
-        message: `Why this works: Selective β2 agonist → activates Gs-coupled receptors → ↑cAMP → PKA activation → smooth muscle relaxation. Bronchodilation → improved airflow → ↑SpO₂. Minimal β1 activity reduces cardiac side effects.`
+        message: `Receptor selectivity: Full agonist at β2 (Emax 100%, EC₅₀ ~12nM) with minimal β1 activity (Emax 12%, EC₅₀ ~350nM) and no α activity. This ~29-fold selectivity ratio means therapeutic bronchodilation occurs at doses that produce minimal cardiac effects. β2 activation → Gs coupling → ↑cAMP → PKA phosphorylation → myosin light chain kinase inhibition → bronchial smooth muscle relaxation.`
       });
       feedback.push({
         type: 'success',
-        message: `Pathophysiology correlation: Airway inflammation + smooth muscle contraction → bronchoconstriction. β2 receptors are abundant in bronchial smooth muscle. Activation directly opposes bronchoconstriction via cAMP-mediated relaxation.`
+        message: `Therapeutic index advantage: β2 receptors are abundant in bronchial smooth muscle, while β1 receptors predominate in cardiac tissue. Selective β2 agonism achieves desired bronchodilation (therapeutic effect) while minimizing tachycardia and arrhythmias (adverse effects), improving the therapeutic index.`
       });
       feedback.push({
         type: 'success',
-        message: `Selectivity advantage: Non-selective β agonists (isoproterenol) cause bronchodilation but produce unwanted β1 cardiac effects (tachycardia, tremor, ↑O₂ demand). β2-selectivity provides therapeutic benefit with fewer side effects. Epinephrine reserved for anaphylaxis or life-threatening asthma where multi-receptor effects needed.`
+        message: `Selectivity comparison: Non-selective β agonists (e.g., isoproterenol) have equal activity at β1 and β2, causing unwanted cardiac stimulation. This demonstrates the pharmacological advantage of receptor subtype selectivity - maximizing desired effects while minimizing off-target actions.`
       });
     } else {
       feedback.push({ type: 'success', message: 'Excellent drug choice for this scenario!' });

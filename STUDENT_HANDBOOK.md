@@ -1,7 +1,7 @@
 # Adrenoceptor Pharmacology Simulator
 ## Student Handbook
 
-**For 3rd Year Undergraduate Medical Students**
+**For 3rd Year Undergraduate Pharmacology Students**
 
 ---
 
@@ -11,8 +11,8 @@
 2. [Learning Objectives](#learning-objectives)
 3. [Pharmacology Background](#pharmacology-background)
 4. [Getting Started](#getting-started)
-5. [Clinical Scenarios](#clinical-scenarios)
-6. [Understanding Drug Selection](#understanding-drug-selection)
+5. [Physiological Scenarios](#physiological-scenarios)
+6. [Understanding Receptor Pharmacology](#understanding-receptor-pharmacology)
 7. [Interpreting Results](#interpreting-results)
 8. [Self-Study Activities](#self-study-activities)
 9. [Assessment Criteria](#assessment-criteria)
@@ -23,18 +23,25 @@
 
 ## Introduction
 
-Welcome to the Adrenoceptor Pharmacology Simulator! This interactive tool has been designed to help you develop a deep understanding of adrenergic pharmacology through hands-on clinical simulation. Rather than memorising drug names and effects, you'll learn to **apply pharmacological principles** to real clinical scenarios.
+Welcome to the Adrenoceptor Pharmacology Simulator! This interactive tool has been designed to help you develop a deep understanding of **receptor pharmacology** through dynamic, physiologically-relevant simulations. Rather than memorising drug names and receptor profiles, you'll explore the fundamental principles of drug-receptor interactions in real-time.
 
 ### Why This Simulator?
 
-Adrenergic drugs are among the most important medications in emergency and critical care medicine. Understanding how they work - and more importantly, *why* certain drugs are chosen for specific conditions - is essential for safe, effective clinical practice.
+Adrenoceptors are a classic model system for understanding receptor pharmacology. They demonstrate key concepts including:
+- Receptor subtype selectivity and tissue distribution
+- Agonism, partial agonism, and competitive antagonism
+- G-protein coupled receptor (GPCR) signalling cascades
+- Dose-response relationships (EC₅₀, Emax, Hill coefficient)
+- Structure-activity relationships and receptor binding affinity (Kd)
+- The therapeutic importance of receptor selectivity
 
 This simulator allows you to:
-- Experiment with different drugs in safe, virtual clinical scenarios
-- See real-time effects of receptor activation on vital signs
-- Understand the relationship between receptor selectivity and clinical outcomes
-- Learn from detailed, educational feedback
-- Develop clinical reasoning skills for drug selection
+- Manipulate drug dose and observe dose-response relationships in real-time
+- Compare receptor selectivity profiles across different drugs
+- Visualize the connection between receptor activation and physiological effects
+- Explore the consequences of agonism vs antagonism
+- Understand why receptor subtype selectivity affects therapeutic index
+- Apply pharmacological principles to predict drug effects
 
 ---
 
@@ -42,22 +49,28 @@ This simulator allows you to:
 
 By the end of your work with this simulator, you should be able to:
 
-### Knowledge
-1. **Classify adrenergic receptors** (α1, α2, β1, β2) and describe their primary locations and physiological effects
-2. **Explain receptor-drug interactions** using concepts of agonism, antagonism, selectivity, EC₅₀, and Emax
-3. **Predict the hemodynamic effects** of selective and non-selective adrenergic agonists and antagonists
-4. **Describe the signalling pathways** activated by different adrenoceptor subtypes (Gq, Gs, Gi)
+### Receptor Pharmacology Fundamentals
+1. **Classify adrenoceptor subtypes** (α1, α2, β1, β2) by tissue distribution, G-protein coupling, and physiological effects
+2. **Explain drug-receptor interactions** using quantitative pharmacology: affinity (Kd), potency (EC₅₀), efficacy (Emax), and Hill coefficient
+3. **Distinguish between full agonists, partial agonists, and competitive antagonists** and predict their effects on receptor-mediated responses
+4. **Describe G-protein signalling cascades** (Gq → IP₃/DAG/Ca²⁺, Gs → cAMP/PKA, Gi → ↓cAMP) and link receptor activation to cellular effects
 
-### Skills
-5. **Select appropriate adrenergic drugs** for common emergency scenarios based on pathophysiology
-6. **Adjust drug dosing** to achieve therapeutic goals while minimising adverse effects
-7. **Interpret vital sign changes** in response to adrenergic drug administration
-8. **Recognise dangerous drug-disease interactions** (e.g., β-blockers in cocaine toxicity)
+### Dose-Response Relationships
+5. **Interpret dose-response curves** and identify EC₅₀, Emax, and slope (Hill coefficient)
+6. **Predict the effects of changing drug dose** on receptor occupancy and physiological responses
+7. **Compare potency vs efficacy** and explain why they represent different pharmacological properties
+8. **Understand competitive antagonism** and how antagonists shift agonist dose-response curves
 
-### Clinical Reasoning
-9. **Justify drug selection** using receptor selectivity, pathophysiology, and evidence-based guidelines
-10. **Evaluate treatment quality** by integrating multiple clinical parameters (MAP, HR, SpO₂, CO)
-11. **Apply pharmacological principles** to novel clinical situations
+### Receptor Selectivity
+9. **Explain the pharmacological basis of receptor selectivity** and why it determines therapeutic index
+10. **Predict off-target effects** based on receptor binding profiles
+11. **Compare selective vs non-selective agents** and explain when each is therapeutically advantageous
+12. **Apply structure-activity relationships** to understand how drug structure determines receptor selectivity
+
+### Integration and Application
+13. **Predict physiological outcomes** from receptor activation patterns (e.g., α1 → vasoconstriction, β2 → bronchodilation)
+14. **Explain pharmacological mechanisms** underlying drug effects in different physiological states
+15. **Identify situations where antagonism is dangerous** (e.g., β-blockade preventing compensatory responses)
 
 ---
 

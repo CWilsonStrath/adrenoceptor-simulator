@@ -206,12 +206,12 @@ function App() {
             </div>
           </div>
 
-          {/* Bottom Row - Treatment Assessment */}
+          {/* Bottom Row - Pharmacological Assessment */}
           <div className="mb-3">
             <div className="bg-white rounded-lg shadow-lg p-3">
               <div className="flex items-center gap-1.5 mb-2">
                 <TrendingUp className="w-4 h-4 text-green-600" />
-                <h2 className="text-sm font-bold text-gray-800">Treatment Assessment</h2>
+                <h2 className="text-sm font-bold text-gray-800">Pharmacological Assessment</h2>
               </div>
               {selectedDrug && selectedScenario ? (
                 (() => {
@@ -242,7 +242,7 @@ function App() {
                   );
                 })()
               ) : (
-                <p className="text-gray-600 text-center py-4 text-xs">Select a drug to view treatment assessment</p>
+                <p className="text-gray-600 text-center py-4 text-xs">Select a drug to view pharmacological assessment</p>
               )}
             </div>
           </div>
