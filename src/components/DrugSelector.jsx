@@ -2,12 +2,22 @@ import React, { useState } from 'react';
 import { Pill, Plus, Minus, CheckCircle2 } from 'lucide-react';
 import { formatDose } from '../utils/calculations';
 
-const DrugSelector = ({ drugs, selectedDrug, dose, onSelectDrug, onDoseChange, strategyMatchingDrugs }) => {
+const DrugSelector = ({ drugs, selectedDrug, dose, onSelectDrug, onDoseChange, strategyMatchingDrugs, activeTab: controlledTab, onTabChange }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState('agonists');
+  const [internalTab, setInternalTab] = useState('agonists');
+
+  // Use controlled tab if provided, otherwise use internal state
+  const activeTab = controlledTab || internalTab;
+  const setActiveTab = (tab) => {
+    if (controlledTab && onTabChange) {
+      onTabChange(tab);
+    } else {
+      setInternalTab(tab);
+    }
+  };
 
   // Categorize drugs
-  const agonistIds = ['epinephrine', 'norepinephrine', 'isoproterenol', 'phenylephrine', 'dobutamine', 'albuterol', 'dopamine', 'ephedrine'];
+  const agonistIds = ['adrenaline', 'noradrenaline', 'isoproterenol', 'phenylephrine', 'dobutamine', 'albuterol', 'dopamine', 'ephedrine'];
   const antagonistIds = ['propranolol', 'metoprolol', 'esmolol', 'labetalol', 'phentolamine', 'prazosin'];
   const otherIds = ['vasopressin', 'milrinone', 'clonidine', 'midazolam'];
 

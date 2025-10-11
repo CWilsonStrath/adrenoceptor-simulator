@@ -34,10 +34,21 @@ const VitalSign = ({ icon: Icon, label, value, unit, status, animate = false }) 
 
 const PatientMonitor = ({ vitals, baseline, selectedDrug, dose }) => {
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [heartBeat, setHeartBeat] = useState(false);
 
   const activation = selectedDrug && dose > 0
     ? calculateReceptorActivation(selectedDrug, dose)
     : { α1: 0, α2: 0, β1: 0, β2: 0 };
+
+  // Animate heart beat at actual heart rate
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeartBeat(true);
+      setTimeout(() => setHeartBeat(false), 200); // Beat duration
+    }, (60 / vitals.hr) * 1000); // Convert HR to milliseconds per beat
+
+    return () => clearInterval(interval);
+  }, [vitals.hr]);
 
   const getHRStatus = (hr) => {
     if (hr < 60 || hr > 100) return hr < 50 || hr > 120 ? 'danger' : 'warning';
@@ -70,6 +81,21 @@ const PatientMonitor = ({ vitals, baseline, selectedDrug, dose }) => {
             <VolumeX className="w-4 h-4 text-gray-400" />
           )}
         </button>
+      </div>
+
+      {/* Beating Heart Indicator */}
+      <div className="mb-2 flex items-center justify-center gap-3 p-2 bg-gray-50 rounded-lg flex-shrink-0">
+        <Heart
+          className={`w-12 h-12 transition-all duration-100 ${
+            heartBeat ? 'scale-125 text-red-600' : 'scale-100 text-red-500'
+          }`}
+          fill={heartBeat ? 'currentColor' : 'none'}
+          strokeWidth={2}
+        />
+        <div className="text-center">
+          <div className="text-3xl font-bold text-gray-800">{Math.round(vitals.hr)}</div>
+          <div className="text-xs text-gray-600">beats/min</div>
+        </div>
       </div>
 
       {/* ECG Monitor */}

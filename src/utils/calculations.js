@@ -76,7 +76,7 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
       });
       feedback.push({
         type: 'danger',
-        message: `Pharmacological mechanism: Cocaine blocks norepinephrine reuptake transporters → ↑synaptic catecholamines → simultaneous activation of α1, β1, and β2 receptors. Selective β-antagonism blocks β2-mediated vasodilation (Gs → ↓cAMP in vascular smooth muscle) while leaving α1-vasoconstriction (Gq → ↑IP₃/Ca²⁺) unopposed.`
+        message: `Pharmacological mechanism: Cocaine blocks noradrenaline reuptake transporters → ↑synaptic catecholamines → simultaneous activation of α1, β1, and β2 receptors. Selective β-antagonism blocks β2-mediated vasodilation (Gs → ↓cAMP in vascular smooth muscle) while leaving α1-vasoconstriction (Gq → ↑IP₃/Ca²⁺) unopposed.`
       });
       feedback.push({
         type: 'danger',
@@ -94,7 +94,7 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
       });
       feedback.push({
         type: 'danger',
-        message: `Pharmacological mechanism: Anaphylaxis requires both β1 (cardiac Gs → ↑cAMP → ↑inotropy/chronotropy) and β2 (bronchial Gs → ↑cAMP → smooth muscle relaxation) receptor activation. Competitive β-antagonism blocks endogenous epinephrine from accessing these receptors, preventing compensatory cardiovascular and bronchial responses.`
+        message: `Pharmacological mechanism: Anaphylaxis requires both β1 (cardiac Gs → ↑cAMP → ↑inotropy/chronotropy) and β2 (bronchial Gs → ↑cAMP → smooth muscle relaxation) receptor activation. Competitive β-antagonism blocks endogenous adrenaline from accessing these receptors, preventing compensatory cardiovascular and bronchial responses.`
       });
       feedback.push({
         type: 'danger',
@@ -113,8 +113,59 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
     }
   }
 
-  // Check receptor targeting
-  if (drug && scenario.targetReceptors) {
+  // Special handling for Normal Physiology scenario - focus on educational exploration
+  if (scenario.id === 'normal' && drug) {
+    const drugReceptors = drug.receptors || {};
+    const activationDetails = [];
+
+    // Describe receptor activation pattern
+    if (drugReceptors.α1 > 50) {
+      activationDetails.push(`Strong α1 activation → Gq → ↑IP₃/Ca²⁺ → vasoconstriction → ↑BP/SVR`);
+    } else if (drugReceptors.α1 > 20) {
+      activationDetails.push(`Moderate α1 activation → Gq signaling → vasoconstriction`);
+    }
+
+    if (drugReceptors.β1 > 50) {
+      activationDetails.push(`Strong β1 activation → Gs → ↑cAMP → ↑HR, ↑contractility, ↑CO`);
+    } else if (drugReceptors.β1 > 20) {
+      activationDetails.push(`Moderate β1 activation → Gs signaling → cardiac stimulation`);
+    }
+
+    if (drugReceptors.β2 > 50) {
+      activationDetails.push(`Strong β2 activation → Gs → ↑cAMP → bronchodilation, vasodilation`);
+    } else if (drugReceptors.β2 > 20) {
+      activationDetails.push(`Moderate β2 activation → Gs signaling → smooth muscle relaxation`);
+    }
+
+    // Handle antagonists
+    if (drugReceptors.β1 < -50 || drugReceptors.β2 < -50) {
+      activationDetails.push(`β-Antagonism → blocks endogenous catecholamine binding → ↓HR, ↓contractility`);
+    }
+    if (drugReceptors.α1 < -50) {
+      activationDetails.push(`α1-Antagonism → blocks endogenous α1 tone → vasodilation`);
+    }
+
+    if (activationDetails.length > 0) {
+      feedback.push({
+        type: 'success',
+        message: `Receptor pharmacology in normal state:`
+      });
+      activationDetails.forEach(detail => {
+        feedback.push({
+          type: 'success',
+          message: detail
+        });
+      });
+      feedback.push({
+        type: 'success',
+        message: `Observe how receptor activation translates to physiological effects. Compare EC₅₀ values and selectivity ratios in the Advanced Analysis section.`
+      });
+      score += 20;
+    }
+  }
+
+  // Check receptor targeting (skip for normal scenario)
+  if (drug && scenario.targetReceptors && scenario.id !== 'normal') {
     const drugReceptors = drug.receptors || {};
 
     // Check if drug targets appropriate receptors for scenario
@@ -164,8 +215,8 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
     }
   }
 
-  // Check if using optimal drug - provide detailed educational feedback
-  if (drug && scenario.optimalDrug === drug.id) {
+  // Check if using optimal drug - provide detailed educational feedback (skip for normal scenario)
+  if (drug && scenario.optimalDrug === drug.id && scenario.id !== 'normal') {
     score += 20;
 
     // Scenario-specific educational feedback
@@ -179,7 +230,7 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         type: 'success',
         message: `Competitive antagonism principle: Labetalol competes with endogenous catecholamines for receptor binding sites. In cocaine toxicity, elevated synaptic norepinephrine activates both α and β receptors - blocking both receptor subtypes addresses the full spectrum of adrenergic overstimulation.`
       });
-    } else if (scenario.id === 'anaphylaxis' && drug.id === 'epinephrine') {
+    } else if (scenario.id === 'anaphylaxis' && drug.id === 'adrenaline') {
       feedback.push({ type: 'success', message: 'Excellent receptor profile match: Non-selective adrenergic agonist' });
       feedback.push({
         type: 'success',
@@ -193,7 +244,7 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
         type: 'success',
         message: `Selectivity consideration: Selective agonists (e.g., β2-selective agents) would only address bronchospasm, leaving hypotension untreated. This demonstrates why non-selectivity is sometimes therapeutically advantageous despite increased side effects.`
       });
-    } else if (scenario.id === 'septic-shock' && drug.id === 'norepinephrine') {
+    } else if (scenario.id === 'septic-shock' && drug.id === 'noradrenaline') {
       feedback.push({ type: 'success', message: 'Excellent receptor profile match: Predominantly α1 with modest β1 activity' });
       feedback.push({
         type: 'success',
@@ -201,11 +252,11 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
       });
       feedback.push({
         type: 'success',
-        message: `Dose-response advantage: Predictable linear relationship between dose and α1-mediated vasoconstriction. Unlike dopamine (dose-dependent receptor switching), norepinephrine maintains consistent α1 > β1 selectivity across therapeutic dose range.`
+        message: `Dose-response advantage: Predictable linear relationship between dose and α1-mediated vasoconstriction. Unlike dopamine (dose-dependent receptor switching), noradrenaline maintains consistent α1 > β1 selectivity across therapeutic dose range.`
       });
       feedback.push({
         type: 'success',
-        message: `Selectivity rationale: Pure α1 agonists (e.g., phenylephrine) lack beneficial β1 cardiac effects. Non-selective agents (e.g., epinephrine) cause problematic β2-mediated vasodilation and arrhythmias. Norepinephrine's α1 + β1 profile optimally balances these effects.`
+        message: `Selectivity rationale: Pure α1 agonists (e.g., phenylephrine) lack beneficial β1 cardiac effects. Non-selective agents (e.g., adrenaline) cause problematic β2-mediated vasodilation and arrhythmias. Noradrenaline's α1 + β1 profile optimally balances these effects.`
       });
     } else if (scenario.id === 'asthma' && drug.id === 'albuterol') {
       feedback.push({ type: 'success', message: 'Excellent receptor profile match: Selective β2 agonist' });
@@ -224,7 +275,7 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
     } else {
       feedback.push({ type: 'success', message: 'Excellent drug choice for this scenario!' });
     }
-  } else if (drug && scenario.optimalDrug) {
+  } else if (drug && scenario.optimalDrug && scenario.id !== 'normal') {
     // Provide helpful suggestions for cocaine scenario
     if (scenario.id === 'cocaine-od') {
       if (drug.id === 'midazolam') {
@@ -286,11 +337,11 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
           type: 'warning',
           message: `What's needed: Multi-receptor activation (α1 + β1 + β2) to address both cardiovascular collapse AND respiratory failure simultaneously. Consider a non-selective adrenergic agonist.`
         });
-      } else if (drug.id === 'norepinephrine') {
+      } else if (drug.id === 'noradrenaline') {
         score += 10;
         feedback.push({
           type: 'warning',
-          message: `Nearly adequate: Norepinephrine (α1 + β1) improves hemodynamics but has minimal β2 activity`
+          message: `Nearly adequate: Noradrenaline (α1 + β1) improves hemodynamics but has minimal β2 activity`
         });
         feedback.push({
           type: 'warning',
@@ -333,11 +384,11 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
           type: 'warning',
           message: `What's needed: Predominantly α1 vasoconstriction with modest β1 inotropy. Consider an agent with balanced α1 + β1 activity.`
         });
-      } else if (drug.id === 'epinephrine') {
+      } else if (drug.id === 'adrenaline') {
         score += 10;
         feedback.push({
           type: 'warning',
-          message: `Alternative agent: Epinephrine can be effective but typically reserved for refractory shock`
+          message: `Alternative agent: Adrenaline can be effective but typically reserved for refractory shock`
         });
         feedback.push({
           type: 'warning',
@@ -366,11 +417,11 @@ export const assessTreatmentQuality = (scenario, vitals, drug) => {
           type: 'warning',
           message: `Selectivity principle: β2-selective agents provide bronchodilation with minimal β1 cardiac effects. This is a key example of how receptor selectivity reduces side effects while maintaining therapeutic efficacy.`
         });
-      } else if (drug.id === 'epinephrine') {
+      } else if (drug.id === 'adrenaline') {
         score += 15;
         feedback.push({
           type: 'warning',
-          message: `Effective but reserved for severe asthma: Epinephrine (non-selective α/β agonist) provides bronchodilation but is not first-line`
+          message: `Effective but reserved for severe asthma: Adrenaline (non-selective α/β agonist) provides bronchodilation but is not first-line`
         });
         feedback.push({
           type: 'warning',

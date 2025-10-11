@@ -42,7 +42,7 @@ const ECGMonitor = ({ heartRate, isActive = true }) => {
 
   const waveformRef = useRef(generateECGWaveform());
 
-  // Play beep sound
+  // Play beep sound - authentic cardiac monitor beep (very short, sharp pulse)
   const playBeep = () => {
     try {
       if (!audioContextRef.current) {
@@ -56,20 +56,27 @@ const ECGMonitor = ({ heartRate, isActive = true }) => {
         audioContext.resume();
       }
 
+      const now = audioContext.currentTime;
+
+      // Real cardiac monitors use very short pulses (20-30ms)
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
 
       oscillator.connect(gainNode);
       gainNode.connect(audioContext.destination);
 
-      oscillator.frequency.value = 880;
+      oscillator.frequency.value = 1000; // ~1kHz is typical
       oscillator.type = 'sine';
 
-      gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.08);
+      // KEY: Very short duration with sharp attack/release envelope
+      const duration = 0.025; // 25 milliseconds - very brief!
 
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.08);
+      // Sharp attack (almost instant), then sharp cutoff
+      gainNode.gain.setValueAtTime(0.2, now);
+      gainNode.gain.linearRampToValueAtTime(0, now + duration);
+
+      oscillator.start(now);
+      oscillator.stop(now + duration);
     } catch (e) {
       console.log('Audio playback failed:', e);
     }
@@ -86,7 +93,7 @@ const ECGMonitor = ({ heartRate, isActive = true }) => {
     const amplitude = height * 0.4; // Slightly larger amplitude
 
     const waveformWidth = width * 0.25; // Each heartbeat takes 25% of screen
-    const scrollSpeed = (heartRate / 60) * 2.5;
+    const scrollSpeed = (heartRate / 60) * 5.0; // Increased from 2.5 to make speed changes more obvious
     const beatInterval = 60000 / heartRate; // milliseconds per beat
 
     // Local variable to track last beep time for this animation loop

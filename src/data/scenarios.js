@@ -1,5 +1,23 @@
 export const scenarios = [
   {
+    id: 'normal',
+    name: 'Normal Physiology',
+    description: 'Healthy patient with normal vital signs',
+    baseline: {
+      hr: 72,
+      sbp: 120,
+      dbp: 80,
+      rr: 16,
+      spo2: 99,
+      svr: 1100,
+      co: 5.2,
+      bronchodilation: 100,
+    },
+    pathophysiology: 'Normal homeostatic state - all receptor systems at baseline tone',
+    targetReceptors: ['Experiment with any drug'],
+    optimalDrug: null, // No specific optimal drug for normal state
+  },
+  {
     id: 'anaphylaxis',
     name: 'Anaphylaxis',
     description: 'Severe allergic reaction with hypotension and bronchospasm',
@@ -15,7 +33,7 @@ export const scenarios = [
     },
     pathophysiology: 'Massive histamine release causing vasodilation, increased vascular permeability, and bronchospasm',
     targetReceptors: ['α1', 'β1', 'β2'],
-    optimalDrug: 'epinephrine',
+    optimalDrug: 'adrenaline',
     contraindicated: ['propranolol', 'metoprolol', 'esmolol'], // β-blockers worsen bronchospasm and prevent compensation
   },
   {
@@ -34,7 +52,7 @@ export const scenarios = [
     },
     pathophysiology: 'Systemic inflammation with profound vasodilation and increased capillary permeability',
     targetReceptors: ['α1', 'β1'],
-    optimalDrug: 'norepinephrine',
+    optimalDrug: 'noradrenaline',
   },
   {
     id: 'asthma',
@@ -125,7 +143,7 @@ export const scenarios = [
       co: 8.5,
       bronchodilation: 100,
     },
-    pathophysiology: 'Blocks reuptake of norepinephrine and dopamine at nerve terminals, prolonging sympathetic nervous system effects and causing severe hypertension with tachycardia',
+    pathophysiology: 'Blocks reuptake of noradrenaline and dopamine at nerve terminals, prolonging sympathetic nervous system effects and causing severe hypertension with tachycardia',
     targetReceptors: ['Benzodiazepines', 'α-blocker', 'Combined α/β-blocker'],
     optimalDrug: 'labetalol', // Combined α/β blocker is safe
     contraindicated: ['propranolol', 'metoprolol', 'esmolol'], // Pure β-blockers

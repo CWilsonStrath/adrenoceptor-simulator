@@ -1,7 +1,7 @@
 export const drugs = [
   {
-    id: 'epinephrine',
-    name: 'Epinephrine',
+    id: 'adrenaline',
+    name: 'Adrenaline',
     class: 'Non-selective adrenergic agonist',
     receptors: {
       α1: 100,
@@ -34,8 +34,8 @@ export const drugs = [
     halfLife: 2, // minutes
   },
   {
-    id: 'norepinephrine',
-    name: 'Norepinephrine',
+    id: 'noradrenaline',
+    name: 'Noradrenaline',
     class: 'α and β1 agonist',
     receptors: {
       α1: 100,

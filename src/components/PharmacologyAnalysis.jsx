@@ -84,6 +84,7 @@ const PharmacologyAnalysis = ({ selectedDrug, dose }) => {
                   drugName={selectedDrug.name}
                   ec50={pharm.ec50}
                   emax={pharm.emax}
+                  currentResponse={response}
                 />
               </div>
 

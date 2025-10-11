@@ -20,9 +20,25 @@ function App() {
   const [showPathways, setShowPathways] = useState(false);
   const [showPharmacology, setShowPharmacology] = useState(false);
   const [strategyMatchingDrugs, setStrategyMatchingDrugs] = useState([]);
+  const [drugSelectorTab, setDrugSelectorTab] = useState(null);
 
   const handleStrategyChange = (strategyData) => {
     setStrategyMatchingDrugs(strategyData.matchingDrugs || []);
+
+    // Update drug selector tab based on selected drug type
+    if (strategyData.drugType) {
+      if (strategyData.drugType === 'agonist') {
+        setDrugSelectorTab('agonists');
+      } else if (strategyData.drugType === 'antagonist') {
+        setDrugSelectorTab('antagonists');
+      } else if (strategyData.drugType === 'partial') {
+        setDrugSelectorTab('agonists'); // Partial agonists are in the agonists tab
+      } else {
+        setDrugSelectorTab(null); // 'any' - let user choose
+      }
+    } else {
+      setDrugSelectorTab(null);
+    }
   };
 
   // Initialize vitals when scenario changes
@@ -201,6 +217,8 @@ function App() {
                   onSelectDrug={handleSelectDrug}
                   onDoseChange={setDose}
                   strategyMatchingDrugs={strategyMatchingDrugs}
+                  activeTab={drugSelectorTab}
+                  onTabChange={setDrugSelectorTab}
                 />
               </div>
             </div>

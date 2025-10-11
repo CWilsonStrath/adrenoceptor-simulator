@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DoseResponseCurve = ({ curveData, currentConcentration, receptorName, drugName, ec50, emax }) => {
+const DoseResponseCurve = ({ curveData, currentConcentration, receptorName, drugName, ec50, emax, currentResponse }) => {
   if (!curveData || curveData.length === 0) return null;
 
   const width = 300;
@@ -33,9 +33,6 @@ const DoseResponseCurve = ({ curveData, currentConcentration, receptorName, drug
 
   // Current concentration marker
   const currentLogConc = currentConcentration > 0 ? Math.log10(currentConcentration) : null;
-  const currentResponse = curveData.find(d =>
-    Math.abs(d.concentration - currentConcentration) < (curveData[1]?.concentration - curveData[0]?.concentration || 1)
-  )?.response || 0;
 
   // EC50 marker
   const ec50LogConc = Math.log10(ec50);
